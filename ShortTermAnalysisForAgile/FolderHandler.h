@@ -12,7 +12,7 @@ class FolderHandler
 public:
 	FolderHandler();
 	~FolderHandler();
-//	static vector<string> FolderHandler::readFileNames(string path_to_folder);
+	//static vector<string> FolderHandler::readFileNames(string path_to_folder);
 
 };
 

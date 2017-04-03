@@ -2,61 +2,65 @@
 1490913058 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FitsToCvMatConverter.cpp
 	"FitsToCvMatConverter.h"
 
-1490912980 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FitsToCvMatConverter.h
+1491153258 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FitsToCvMatConverter.h
 	"fitsio.h"
 	<opencv2/core/core.hpp>
 	<opencv2/highgui/highgui.hpp>
 	<string>
 	<iostream>
 
-1490978748 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FolderHandler.cpp
+1491153238 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FolderHandler.cpp
 	"FolderHandler.h"
 
-1490979055 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FolderHandler.h
+1491153162 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/FolderHandler.h
 	<iostream>
 	<vector>
 	<map>
 	<string>
 	<iostream>
 
-1491068986 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/GammaRayDetector.cpp
+1491240709 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/GammaRayDetector.cpp
 	"GammaRayDetector.h"
 	"GammaRayDetector.h"
 
-1491067641 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/GammaRayDetector.h
+1491153674 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/GammaRayDetector.h
 	<iostream>
 	<stdio.h>
 	<string>
 	"FitsToCvMatConverter.h"
 	"PixelsMeanEvaluator.h"
 	"Thresholder.h"
-	"Filterer.h"
+	"GaussianFilterer.h"
 	"ImagePrinter.h"
 	"HistogramStretching.h"
 
-1491067464 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/PixelsMeanEvaluator.h
+1491164868 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/PixelsMeanEvaluator.h
 	<string>
 	<opencv2/core/core.hpp>
 	<opencv2/highgui/highgui.hpp>
 	<opencv2/imgproc/imgproc.hpp>
 	<iostream>
+	<stdio.h>
 
-1491068626 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Main.cpp
+1491239110 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Main.cpp
 	<iostream>
 	<string>
 	"GammaRayDetector.h"
+	<stdio.h>
 
-1491068090 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/PixelsMeanEvaluator.cpp
+1491165102 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/PixelsMeanEvaluator.cpp
 	"PixelsMeanEvaluator.h"
 
-1491067601 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Thresholder.cpp
+1491243346 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Thresholder.cpp
 	"Thresholder.h"
 	"Thresholder.h"
 
-1491067596 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Thresholder.h
+1491241040 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/Thresholder.h
 	<opencv2/core/core.hpp>
 	<opencv2/highgui/highgui.hpp>
 	<opencv2/imgproc/imgproc.hpp>
+	<stdio.h>
+	<iostream>
 
 1480716750 /home/giancarlo/cfitsio/fitsio.h
 	<stdio.h>
@@ -76,14 +80,14 @@
 	<opencv2/imgproc/imgproc.hpp>
 	<iostream>
 
-1491064771 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/include/ImagePrinter.h
+1491237647 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/include/ImagePrinter.h
 	<opencv2/core/core.hpp>
 	<opencv2/highgui/highgui.hpp>
 	<opencv2/imgproc/imgproc.hpp>
 	<iostream>
 	"stdio.h"
 
-1491067375 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/src/ImagePrinter.cpp
+1491236022 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/src/ImagePrinter.cpp
 	"ImagePrinter.h"
 
 1491066787 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/include/HistogramStretching.h
@@ -91,6 +95,33 @@
 	<opencv2/highgui/highgui.hpp>
 	<iostream>
 
-1491068923 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/src/HistogramStretching.cpp
+1491238841 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/src/HistogramStretching.cpp
 	"HistogramStretching.h"
+
+1491235853 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/GaussianFilterer.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+
+1491162572 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/ImagePrinter.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+	"stdio.h"
+
+1491153498 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/HistogramStretching.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<iostream>
+
+1491235934 source:/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/src/GaussianFilterer.cpp
+	"GaussianFilterer.h"
+
+1491235923 /home/giancarlo/Documenti/università/Secondo anno/Computer Vision/ShortTermAnalysisForAgile/ShortTermAnalysisForAgile/include/GaussianFilterer.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
 

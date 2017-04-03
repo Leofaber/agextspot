@@ -130,6 +130,9 @@
     <ClCompile Include="FitsToCvMatConverter.cpp" />
     <ClCompile Include="FolderHandler.cpp" />
     <ClCompile Include="GammaRayDetector.cpp" />
+    <ClCompile Include="GaussianFilterer.cpp" />
+    <ClCompile Include="HistogramStretching.cpp" />
+    <ClCompile Include="ImagePrinter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PixelsMeanEvaluator.cpp" />
     <ClCompile Include="Thresholder.cpp" />
@@ -138,6 +141,9 @@
     <ClInclude Include="FitsToCvMatConverter.h" />
     <ClInclude Include="FolderHandler.h" />
     <ClInclude Include="GammaRayDetector.h" />
+    <ClInclude Include="GaussianFilterer.h" />
+    <ClInclude Include="HistogramStretching.h" />
+    <ClInclude Include="ImagePrinter.h" />
     <ClInclude Include="PixelsMeanEvaluator.h" />
     <ClInclude Include="Thresholder.h" />
   </ItemGroup>

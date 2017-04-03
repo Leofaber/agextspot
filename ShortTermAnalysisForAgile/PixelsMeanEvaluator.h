@@ -5,16 +5,21 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <stdio.h>
 using namespace std;
 using namespace cv;
 
 class PixelsMeanEvaluator
 {
 public:
- 	static float getPixelsMean(string path);
-	static float getPixelsMean(cv::Mat image);
+	//static float getWeightedPixelsMean(string path);
+	static float getWeightedPixelsMean(Mat image);
+	static float getPixelsMean(Mat image);
 private:
-    PixelsMeanEvaluator();
+	PixelsMeanEvaluator();
+	static Mat computeHistogram(Mat image, int histSize);
+	static void drawHistogram(Mat histogram, int histSize);
+
 
 };
 

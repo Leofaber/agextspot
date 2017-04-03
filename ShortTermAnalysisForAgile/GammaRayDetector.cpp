@@ -24,31 +24,56 @@ GammaRayDetector::~GammaRayDetector()
 void GammaRayDetector::detect()
 {
 
-    Mat tempImage = agileImage.clone();
+	Mat tempImage = agileImage.clone();
 
 
-    // STRETCHING
-    tempImage = HistogramStretching::stretch(tempImage);
-    // PRINTING IMAGE
-	ImagePrinter::printImage(tempImage);
-
-    // FILTERING
-	Filterer gaussianFilter(Size(3,3),10);
-	tempImage = gaussianFilter.filter(tempImage);
-    // PRINTING IMAGE
-	ImagePrinter::printImage(tempImage);
-
-    // COMPUTING MEAN
- 	float mean = PixelsMeanEvaluator::getPixelsMean(tempImage);
-	cout << "mean: " << mean << endl;
-
-
-    // THRESHOLDING
-    tempImage = Thresholder::makeThresholding(tempImage, mean);
-
+	// STRETCHING
+	tempImage = HistogramStretching::stretch(tempImage);
 
 	// PRINTING IMAGE
-	ImagePrinter::printImage(tempImage);
+	ImagePrinter::printImageInWindow(tempImage,"window1");
+	//ImagePrinter::printImageInConsole(tempImage);
+
+	// FILTERING
+	GaussianFilterer gaussianFilter(Size(7, 7), 3);
+	tempImage = gaussianFilter.filter(tempImage);
+	// PRINTING IMAGE
+	//ImagePrinter::printImageInConsole(tempImage);
+	ImagePrinter::printImageInWindow(tempImage, "window2");
+
+	// FILTERING
+	GaussianFilterer gaussianFilter4Histogram(Size(3, 3), 1);
+	tempImage = gaussianFilter.filter(tempImage);
+
+	// PRINTING IMAGE
+	//ImagePrinter::printImageInConsole(tempImage);
+	ImagePrinter::printImageInWindow(tempImage, "window3");
+
+
+
+	// COMPUTING MEAN
+	float mean = PixelsMeanEvaluator::getPixelsMean(tempImage);
+	//cout << "mean: " << mean << endl;
+
+
+	// COMPUTING THRESHOLD
+	float threshold = Thresholder::getThresholdFromPeaksMethod(tempImage);
+	cout << "threshold: " << threshold << endl;
+
+
+	// THRESHOLDING
+	tempImage = Thresholder::makeThresholding(tempImage, threshold);
+	ImagePrinter::printImageInConsole(tempImage);
+	ImagePrinter::printImageInWindow(tempImage, "window2");
+
+
+	// STRETCHING
+	tempImage = HistogramStretching::stretch(tempImage);
+	// PRINTING IMAGE
+	ImagePrinter::printImageInWindow(tempImage, "window2");
+
+
+
 
 
 
@@ -65,7 +90,7 @@ void GammaRayDetector::detect()
 
 	}
 
-    	getchar();
+	//getchar();
 
 }
 

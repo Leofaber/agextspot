@@ -8,7 +8,7 @@
 #include "FitsToCvMatConverter.h"
 #include "PixelsMeanEvaluator.h"
 #include "Thresholder.h"
-#include "Filterer.h"
+#include "GaussianFilterer.h"
 #include "ImagePrinter.h"
 #include "HistogramStretching.h"
 

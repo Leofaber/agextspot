@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "GammaRayDetector.h";
+#include <stdio.h>
 
 
 
@@ -11,8 +12,8 @@ using namespace std;
 int main(){
 
 	/*INPUT PATH TO FITS FILE*/
- 	cout << "Please insert the path to image in FITS format: " << endl;
-	string fitsFilePath = "/home/giancarlo/Documenti/università/Secondo anno/Computer Vision/Computer Vision - Bulgarelli/MappeSimulate/ImgSimF80bg15/0000000008_001_GRBTESTMAP.cts";
+	cout << "Please insert the path to image in FITS format: " << endl;
+	string fitsFilePath = "../MappeSimulate/ImgSimF0bg15/0000000007_001_GRBTESTMAP.cts";
 	//getline(cin, fitsFilePath);
 
 
@@ -20,8 +21,8 @@ int main(){
 	cout << "Please insert a analysis mode: \nTF (Thresholding then Filtering) or \nFT (Filtering then Thresholding)" << endl;
 	string inputMode;
 	//getline(cin, inputMode);
- 	inputMode = "TF";
- 	if ((inputMode != "TF") && (inputMode != "FT") ){
+	inputMode = "TF";
+	if ((inputMode != "TF") && (inputMode != "FT")){
 		cout << "Input Error. You inserted " << inputMode << ". Insert instead TF or FT" << endl;
 		getchar();
 		return 0;
@@ -44,7 +45,7 @@ int main(){
 	string simulatedFitsFilesPath;
 	if (thresholdMode == "TS"){
 		cout << "Please insert the path to the simulated images in FITS format: " << endl;
- 		getline(cin, simulatedFitsFilesPath);
+		getline(cin, simulatedFitsFilesPath);
 
 	}
 
@@ -56,7 +57,9 @@ int main(){
 	grd.detect();
 
 
+
 	return 0;
+
 }
 
 /*
@@ -73,30 +76,3 @@ c++;
 }
 }
 */
-
- /*
-	// Draw the histogram
-	int hist_w = 512; int hist_h = 500;
-	int bin_w = cvRound((double)hist_w / histSize);
-
-	Mat histImage(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));
-
-	/// Draw a line for each grey level
-	for (int i = 1; i < histSize; i++)
-	{
-		cout << "Grey level " << i - 1 << " Count: " << imageHist.at<float>(i - 1) << endl;
-		line(histImage, Point(bin_w*(i - 1), hist_h - cvRound(imageHist.at<float>(i - 1))),
-			Point(bin_w*(i), hist_h - cvRound(imageHist.at<float>(i))),
-			Scalar(255, 0, 0), 2, 8, 0);
-
-	}
-
-
-	namedWindow("Image", CV_WINDOW_AUTOSIZE);
-	imshow("Image", image);
-	/// Display
-	namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE);
-	imshow("calcHist Demo", histImage);
-
-	//waitKey(0);
-    */
