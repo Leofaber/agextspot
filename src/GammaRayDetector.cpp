@@ -94,7 +94,7 @@ void GammaRayDetector::detect(string fitsFileName)
     vector<Blob> blobs = BlobsFinder::findBlobs(tempImage);
 
     if(blobs.size()==0){
-
+        destroyAllWindows();
         return;
     }
 
