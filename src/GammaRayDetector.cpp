@@ -98,9 +98,25 @@ void GammaRayDetector::detect(string fitsFileName)
         return;
     }
 
-    /// COMPUTE PIXELS MEAN AND MAX OF MEANs
+
+
+
+    /// TODO THRESHOLDING -> Eliminate Background Blobs (mean < 5)
+
+    if(blobs.size()==0){
+        destroyAllWindows();
+        return;
+    }
+
+
+
+
+
+    /// COMPARISON OF REMAINS BLOBS : who is backgound , who is flux?
     float max = blobs[0].getPixelsMean();
     Blob fluxBlob = blobs[0];
+    cout << "Mean of blob " << blobs[0].getCentroid() << " = " << blobs[0].getPixelsMean() << endl;
+
     vector<Blob>::iterator i = blobs.begin();
     advance(i,1);
     for(; i != blobs.end(); i++){

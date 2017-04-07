@@ -14,9 +14,11 @@ using namespace std;
 
 int main(){
 
+
+
 	/*INPUT PATH TO FITS FILE*/
 	cout << "Please insert the path to image in FITS format: " << endl;
-	string fitsFilePath = "MappeSimulate/ImgSimF40bg15";
+	string fitsFilePath = "MappeSimulate/ImgSimF0bg15";
 	//getline(cin, fitsFilePath);
 
 
