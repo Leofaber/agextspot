@@ -93,6 +93,11 @@ void GammaRayDetector::detect(string fitsFileName)
     /// FINDING BLOBS
     vector<Blob> blobs = BlobsFinder::findBlobs(tempImage);
 
+    if(blobs.size()==0){
+
+        return;
+    }
+
     /// COMPUTE PIXELS MEAN AND MAX OF MEANs
     float max = blobs[0].getPixelsMean();
     Blob fluxBlob = blobs[0];
