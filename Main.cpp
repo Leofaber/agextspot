@@ -4,7 +4,8 @@
 #include "FolderManager.h"
 #include <stdio.h>
 
-//git@bitbucket.org:GZHeisenberg/shorttermanalysisforagilefinal.git
+///  BitBucket address
+///  git@bitbucket.org:GZHeisenberg/shorttermanalysisforagilefinal.git
 
 
 using namespace std;
