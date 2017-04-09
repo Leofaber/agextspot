@@ -5,6 +5,7 @@
 #include <iostream>
 #include "stdio.h"
 #include "Blob.h"
+#include "HistogramStretching.h"
 using namespace cv;
 using namespace std;
 
@@ -12,8 +13,10 @@ class ImagePrinter
 {
 public:
 	static void printImageInConsole(Mat inputImage);
+	static void printImageInWindowWithStretching(Mat inputImage, string windowName);
 	static void printImageInWindow(Mat inputImage, string windowName);
 	static void printImageBlob(Mat inputImage, Blob b, string windowName);
+	static void printImageBlobs(Mat inputImage, vector<Blob> blobs, string windowName);
 
 private:
 	ImagePrinter();

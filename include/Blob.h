@@ -35,6 +35,9 @@ class Blob
         vector<Point> contour;
         Point centroid;
         void computeCentroid();
+        float pixelMean;
+        float computePixelMean();
+
 
 };
 

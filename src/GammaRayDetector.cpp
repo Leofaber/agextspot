@@ -20,7 +20,8 @@ void GammaRayDetector::startAnalysis(){
     vector<string> fileNames;
     fileNames = FolderManager::getFilesFromFolder(fitsFilesPath);
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
-       cout<< *it << endl;
+
+       cout<<"\n\nAnalysis of: " << *it << endl;
        detect(*it);
     }
 
@@ -28,72 +29,91 @@ void GammaRayDetector::startAnalysis(){
 
 void GammaRayDetector::detect(string fitsFileName)
 {
-
     string fitsFilePath = fitsFilesPath + "/" +fitsFileName;
 
-    /// CONVERTING FITS TO MAT
+
+
+    /// 1 - CONVERTING FITS TO MAT
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
 
 
-    /// FINDING BLOBS
+
+
+    /// 2 - FINDING BLOBS -> stretching,gaussian filtering, percentile threshold
     vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
 
     if(blobs.size()==0){
-        destroyAllWindows();
+        //destroyAllWindows();
+        cout << "[Stretching,filtering,percentile threshold] No flux found." << endl;
+        getchar();
         return;
+    }
+
+    if(blobs.size()>1){
+
+        Mat temp3ChannelImage(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0));
+        ImagePrinter::printImageBlobs(temp3ChannelImage, blobs, "Blobs step 2");
+        destroyWindow("Blobs step 2");
+
     }
 
 
 
 
-    /// TODO THRESHOLDING -> Eliminate Background Blobs (mean < 5)
+    /// 3 - THRESHOLDING -> Eliminate Background Blobs (mean <= backgroundThresholdValue)
+    vector<Blob> fluxBlob = Thresholder::makeThresholdingOnBlobPixelMean(blobs, backgroundThresholdValue);
 
-    if(blobs.size()==0){
-        destroyAllWindows();
+    if(fluxBlob.size()==0){
+        //destroyAllWindows();
+        cout << "[Thresholding on background blob mean] No flux found." << endl;
+        getchar();
         return;
+    }
+
+    if(fluxBlob.size()>1){
+        Mat temp3ChannelImage(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0));
+        ImagePrinter::printImageBlobs(temp3ChannelImage, blobs, "Blobs step 3");
+
     }
 
 
 
+    /// 4 - SELECT FLUX -> Eliminate False Positives (find biggest mean blob)
+    Blob flux = fluxBlob[0];
+    if(fluxBlob.size() > 1 ){
+        cout << "False Positives Blobs are present. I take the one with biggest mean" << endl;
+        vector<Blob>::iterator i = fluxBlob.begin();
+        advance(i,1);
+        float max = flux.getPixelsMean();
+        for(; i!=fluxBlob.end(); i++){
+            Blob b = *i;
+            if(b.getPixelsMean() == max && b.getNumberOfPixels()>flux.getNumberOfPixels()){
+                cout << "Two blobs with same mean. I take the biggest" << endl;
+                flux = b;
+                max = b.getPixelsMean();
+            }else if(b.getPixelsMean() == max && b.getNumberOfPixels() == flux.getNumberOfPixels()){
+                cout << "Two blobs with same mean and same size" << endl;
 
-
-    /// COMPARISON OF REMAINS BLOBS : who is backgound , who is flux?
-    float max = blobs[0].getPixelsMean();
-    Blob fluxBlob = blobs[0];
-    cout << "Mean of blob " << blobs[0].getCentroid() << " = " << blobs[0].getPixelsMean() << endl;
-
-    vector<Blob>::iterator i = blobs.begin();
-    advance(i,1);
-    for(; i != blobs.end(); i++){
-        Blob b = *i;
-        float mean = b.getPixelsMean();
-        cout << "Mean of blob " << b.getCentroid() << " = " << mean << endl;
-        if(mean > max){
-            max = mean;
-            fluxBlob = b;
-        }else if(mean==max) {
-            if(b.getNumberOfPixels() > fluxBlob.getNumberOfPixels()) {
-                fluxBlob = b;
+            }else if(b.getPixelsMean()>max){
+                flux = b;
+                max = b.getPixelsMean();
             }
-
         }
+
     }
 
-
-    /// PRINTING IMAGE
-    /*
+    cout << "Found flux ! " <<endl;
     Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
-    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
-        ImagePrinter::printImageBlob(tempImageRgb, *i ,"window5");
-    }
-    */
-    Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
-    ImagePrinter::printImageBlob(tempImageRgb, fluxBlob,"window5");
+    ImagePrinter::printImageBlob(tempImageRgb, flux,"Flux blob");
 
 
-    /// TODO
 
-    // fix CRASH WHEN NO FLUX ARE PRESENT
-    // KERNEL PIU GRANDE
+
+
+
+
+
+
+
     // COMPUTE REAL COORDINATES
 }

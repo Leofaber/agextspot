@@ -27,7 +27,7 @@ int Thresholder::getThresholdFromPercentileMethod(Mat image, float percentile){
 
     float numberOfPixels = image.rows*image.cols;
     float percentilePixels = percentile*numberOfPixels/100;
-    cout << "percentilePixels: " << percentilePixels << endl;
+   // cout << "percentilePixels: " << percentilePixels << endl;
     float count = 0;
     int threshold = 0;
     while (count < percentilePixels){
@@ -94,4 +94,22 @@ int Thresholder::getThresholdFromPeaksMethod(Mat image){
 		return 0;
 	}
 
+}
+
+vector<Blob> Thresholder::makeThresholdingOnBlobPixelMean(vector<Blob> blobs, float backgroundThresholdValue){
+    if(blobs.size()>1){
+        cout << "More than 1 blobs found." << endl;
+        vector<Blob> fluxBlob;
+        for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
+            Blob b = *i;
+            //cout << "Blob mean: " << b.getPixelsMean();
+            if(b.getPixelsMean() > backgroundThresholdValue){
+                fluxBlob.push_back(b);
+            }
+        }
+        return fluxBlob;
+    }else{
+        cout << "Found only 1 blob :) " << endl;
+        return blobs;
+    }
 }

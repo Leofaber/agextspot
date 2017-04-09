@@ -4,7 +4,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stdio.h>
 #include <iostream>
-
+#include "Blob.h"
 using namespace cv;
 using namespace std;
 
@@ -14,7 +14,7 @@ public:
 	static Mat makeThresholding(cv::Mat inputImage, double t);
 	static int getThresholdFromPeaksMethod(Mat histogram);
 	static int getThresholdFromPercentileMethod(Mat image, float percentile);
-
+    static vector<Blob> makeThresholdingOnBlobPixelMean(vector<Blob> blobs,float backgroundThresholdValue);
 
 private:
 	Thresholder();

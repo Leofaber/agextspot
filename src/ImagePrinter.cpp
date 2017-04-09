@@ -35,8 +35,20 @@ void ImagePrinter::printImageInWindow(Mat inputImage, string windowName){
 	imshow(windowName, outputImage);
 	waitKey(0);
  }
+void ImagePrinter::printImageInWindowWithStretching(Mat inputImage, string windowName){
+    Mat img = inputImage.clone();
+    img = HistogramStretching::stretch(img);
+    resize(img, img, Size(0, 0), 3, 3, INTER_LINEAR);
+	namedWindow(windowName, CV_WINDOW_AUTOSIZE);
+	imshow(windowName, img);
+	waitKey(0);
+}
 
-
+void ImagePrinter::printImageBlobs(Mat inputImage, vector<Blob> blobs, string windowName){
+    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
+        printImageBlob(inputImage,*i,windowName);
+    }
+}
  void ImagePrinter::printImageBlob(Mat inputImage, Blob b, string windowName) {
    	Mat outputImage;
 

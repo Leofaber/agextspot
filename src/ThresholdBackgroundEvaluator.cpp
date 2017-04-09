@@ -24,6 +24,7 @@ float ThresholdBackgroundEvaluator::getBackgroundThresholdValue(){
 
     float count = 0;
     float total = blobsPixelsMeans.size();
+    cout << "TOTAL: " << total << endl;
     for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
         cout << *it << endl;
         count += *it;
@@ -36,6 +37,7 @@ float ThresholdBackgroundEvaluator::getBackgroundThresholdValue(){
     cout << "Analysis Complete:" << endl;
     cout << "TOTAL MEAN: " << thresholdValue <<endl;
 
+    destroyAllWindows();
     getchar();
 
     return thresholdValue;

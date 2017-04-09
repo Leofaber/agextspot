@@ -9,8 +9,10 @@ Blob::Blob(vector<Point>& c, Mat image)
     cout << "Centroid of Blob: " << centroid << endl;
     computeBlobPixels(c,image);
     numberOfPixels = blobPixels.size();
-    /*cout << "Pixels of Blob: " << endl;
-    for (vector<Pixel>::iterator it = blobPixels.begin(); it != blobPixels.end(); ++it){
+    cout << "Pixels of Blob: " << numberOfPixels << endl;
+    pixelMean = computePixelMean();
+    cout << "Pixels mean: " << pixelMean << endl;
+   /*for (vector<Pixel>::iterator it = blobPixels.begin(); it != blobPixels.end(); ++it){
         Pixel p = *it;
         cout <<"Pixel: " << p.p << " ->  " <<  p.greyLevel <<  endl;
     }*/
@@ -68,6 +70,10 @@ void Blob::computeBlobPixels(vector<Point>& c, Mat image){
  }
 
 float Blob::getPixelsMean(){
+    return pixelMean;
+}
+
+float Blob::computePixelMean(){
     float numberOfBlobPixels = blobPixels.size();
     float greyLevelCount = 0;
 

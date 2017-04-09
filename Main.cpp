@@ -12,18 +12,16 @@ using namespace std;
 int main(){
 
 
-
-	/*INPUT PATH TO FITS FILE*/
-	cout << "Please insert the path to image in FITS format: " << endl;
-	string fitsFilePath = "MappeSimulate/ImgSimF80bg15";
-	//getline(cin, fitsFilePath);
-
+    cout << "Please insert the path to image in FITS format: " << endl;
+	string fitsFilePath = "MappeSimulate/TestImages/50ImgSimF40bg15";
     string simulatedFitsFilesPath = "MappeSimulate/BackgroundImages";
 
     bool debugMode = false;
 
-    ThresholdBackgroundEvaluator tbe(fitsFilePath, debugMode);
+    ThresholdBackgroundEvaluator tbe(simulatedFitsFilesPath, debugMode);
 	float backgroundThresholdValue = tbe.getBackgroundThresholdValue();
+
+	debugMode = true;
 
  	GammaRayDetector grd(fitsFilePath,backgroundThresholdValue,debugMode);
 	grd.startAnalysis();
