@@ -4,15 +4,10 @@
 
 
 
-GammaRayDetector::GammaRayDetector(string _fitsFilesPath, string _fitsSimulatedFilePath, string _analysisMode, string _thresholdMode)
-{
-	fitsFilesPath = _fitsFilesPath;
-	fitsSimulatedFilePath = _fitsSimulatedFilePath;
-	analysisMode = _analysisMode;
-	thresholdMode = _thresholdMode;
-
-
-
+GammaRayDetector::GammaRayDetector(string _fitsFilesPath, float _backgroundThresholdValue, bool _debugMode)
+{   fitsFilesPath = _fitsFilesPath;
+	backgroundThresholdValue = _backgroundThresholdValue;
+	debugMode = _debugMode;
 
 }
 
@@ -40,58 +35,8 @@ void GammaRayDetector::detect(string fitsFileName)
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
 
 
-
-
-
-
-
-	/// STRETCHING
-	cout << "STRETCHING" << endl;
-	float r = 0.05;
-	tempImage = HistogramStretching::nonLinearStretch(tempImage,r);
-	/// PRINTING IMAGE
-	ImagePrinter::printImageInWindow(tempImage,"window1");
-	ImagePrinter::printImageInConsole(tempImage);
-
-
-
-
-
-
-
-	/// GAUSSIAN FILTERING
-    cout << "GAUSSIAN FILTERING" << endl;
-	GaussianFilterer gaussianFilter(Size(23, 23), 3.5); // 17x17   2.5
-	tempImage = gaussianFilter.filter(tempImage);
-	/// PRINTING IMAGE
-	ImagePrinter::printImageInConsole(tempImage);
-	ImagePrinter::printImageInWindow(tempImage, "window2");
-
-
-
-
-
-
-	/// COMPUTING THRESHOLD
-    cout << "THRESHOLD" << endl;
-	//float threshold = Thresholder::getThresholdFromPeaksMethod(tempImage);
-	float threshold = Thresholder::getThresholdFromPercentileMethod(tempImage,99);
-	cout << "threshold: " << threshold << endl;
-	/// DO THRESHOLDING
-	tempImage = Thresholder::makeThresholding(tempImage, threshold);
-	/// PRINTING IMAGE
-	ImagePrinter::printImageInConsole(tempImage);
-	ImagePrinter::printImageInWindow(tempImage, "window3");
-
-
-
-
-
-
-
-
     /// FINDING BLOBS
-    vector<Blob> blobs = BlobsFinder::findBlobs(tempImage);
+    vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
 
     if(blobs.size()==0){
         destroyAllWindows();

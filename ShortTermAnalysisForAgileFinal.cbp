@@ -13,10 +13,11 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="0" />
 				<Compiler>
+					<Add option="-std=c++14" />
 					<Add option="-g" />
 					<Add directory="include" />
-					<Add directory="/home/giancarlo/cfitsio" />
-					<Add directory="/home/giancarlo/opencv-2.4.13/include" />
+					<Add directory="/home/leofaber/cfitsio" />
+					<Add directory="/home/leofaber/opencv-2.4.13/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lopencv_calib3d" />
@@ -37,8 +38,8 @@
 					<Add option="-lopencv_video" />
 					<Add option="-lopencv_videostab" />
 					<Add option="-pthread" />
-					<Add library="/home/giancarlo/cfitsio/libcfitsio.a" />
-					<Add directory="/home/giancarlo/opencv-2.4.13/bin" />
+					<Add library="/home/leofaber/cfitsio/libcfitsio.a" />
+					<Add directory="/home/leofaber/opencv-2.4.13/release/bin" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -58,6 +59,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-g" />
+			<Add directory="include" />
+			<Add directory="../../../../opencv-2.4.13/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lopencv_calib3d" />
@@ -78,7 +81,8 @@
 			<Add option="-lopencv_video" />
 			<Add option="-lopencv_videostab" />
 			<Add option="-pthread" />
-			<Add library="/home/giancarlo/cfitsio/libcfitsio.a" />
+			<Add library="/home/leofaber/cfitsio/libcfitsio.a" />
+			<Add directory="../../../../opencv-2.4.13/release/bin" />
 		</Linker>
 		<Unit filename="Main.cpp" />
 		<Unit filename="include/Blob.h" />
@@ -104,6 +108,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

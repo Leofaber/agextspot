@@ -245,3 +245,122 @@
 	"Thresholder.h"
 	"Thresholder.h"
 
+1491706151 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/Main.cpp
+	"GammaRayDetector.h"
+	"ThresholdBackgroundEvaluator.h"
+
+1491705855 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GammaRayDetector.h
+	<iostream>
+	<stdio.h>
+	"FitsToCvMatConverter.h"
+	"FolderManager.h"
+	"BlobsFinder.h"
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/FitsToCvMatConverter.h
+	"fitsio.h"
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<string>
+	<iostream>
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/Thresholder.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<stdio.h>
+	<iostream>
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GaussianFilterer.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/ImagePrinter.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+	"stdio.h"
+	"Blob.h"
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/Blob.h
+	<vector>
+	<string>
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/HistogramStretching.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<iostream>
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/FolderManager.h
+	<dirent.h>
+	<iostream>
+	<stdio.h>
+	<string>
+	<stdlib.h>
+	<vector>
+
+1491705551 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/BlobsFinder.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<stdio.h>
+	<iostream>
+	<map>
+	"Blob.h"
+	"Thresholder.h"
+	"GaussianFilterer.h"
+	"ImagePrinter.h"
+	"HistogramStretching.h"
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/Blob.cpp
+	"Blob.h"
+
+1491705643 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/BlobsFinder.cpp
+	"BlobsFinder.h"
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/Filterer.cpp
+	"Filterer.h"
+
+1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/Filterer.h
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FitsToCvMatConverter.cpp
+	"FitsToCvMatConverter.h"
+
+1491704220 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FolderManager.cpp
+	"FolderManager.h"
+
+1491705878 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GammaRayDetector.cpp
+	"GammaRayDetector.h"
+	"GammaRayDetector.h"
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GaussianFilterer.cpp
+	"GaussianFilterer.h"
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/HistogramStretching.cpp
+	"HistogramStretching.h"
+
+1491678164 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/ImagePrinter.cpp
+	"ImagePrinter.h"
+
+1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/Thresholder.cpp
+	"Thresholder.h"
+	"Thresholder.h"
+
+1491706136 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/ThresholdBackgroundEvaluator.h
+	"FolderManager.h"
+	"FitsToCvMatConverter.h"
+	"BlobsFinder.h"
+
+1491706112 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/ThresholdBackgroundEvaluator.cpp
+	"ThresholdBackgroundEvaluator.h"
+

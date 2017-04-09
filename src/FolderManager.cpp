@@ -10,6 +10,7 @@ vector<string> FolderManager::getFilesFromFolder(string folderpath){
     vector<string> fileNames;
 	DIR *pdir = NULL;
 	struct dirent *pent = NULL;
+	cout <<"folderpath:"<< folderpath << endl;
 	pdir = opendir (folderpath.c_str());
     if (pdir == NULL)                   // if pdir wasn't initialised correctly
         {

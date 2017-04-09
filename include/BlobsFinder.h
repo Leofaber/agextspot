@@ -7,6 +7,10 @@
 #include <iostream>
 #include <map>
 #include "Blob.h"
+#include "Thresholder.h"
+#include "GaussianFilterer.h"
+#include "ImagePrinter.h"
+#include "HistogramStretching.h"
 
 using namespace cv;
 using namespace std;
@@ -15,7 +19,7 @@ using namespace std;
 class BlobsFinder
 {
     public:
-        static vector<Blob> findBlobs(Mat image);
+        static vector<Blob> findBlobs(Mat image, bool debugMode);
         static Point findCentroidOfMainBlob(vector<vector<Point> >& contours);
     protected:
     private:
