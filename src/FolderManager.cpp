@@ -31,14 +31,14 @@ vector<string> FolderManager::getFilesFromFolder(string folderpath){
         // otherwise, it was initialised correctly. Let's print it on the console:
         if(pent->d_name[0]!='.') {
             fileNames.push_back(pent->d_name);
-            cout << pent->d_name << endl;
+            //cout << pent->d_name << endl;
         }
     }
 
     // finally, let's close the directory
     closedir (pdir);
 
-    cin.get (); // pause for input
+   // cin.get (); // pause for input
     return fileNames; // everything went OK
 
 }

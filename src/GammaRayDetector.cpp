@@ -4,9 +4,10 @@
 
 
 
-GammaRayDetector::GammaRayDetector(string _fitsFilesPath, float _backgroundThresholdValue, bool _debugMode)
+GammaRayDetector::GammaRayDetector(string _fitsFilesPath, float _backgroundThresholdValue, float _backgroundThresholdDeviation, bool _debugMode)
 {   fitsFilesPath = _fitsFilesPath;
 	backgroundThresholdValue = _backgroundThresholdValue;
+	backgroundThresholdDeviation = _backgroundThresholdDeviation;
 	debugMode = _debugMode;
 
 }

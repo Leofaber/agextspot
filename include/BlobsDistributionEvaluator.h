@@ -5,12 +5,16 @@
 #include "FitsToCvMatConverter.h"
 #include "BlobsFinder.h"
 
+struct GaussianDistribution{
+    float mean;
+    float deviation;
+};
 
-class ThresholdBackgroundEvaluator
+class BlobsDistributionEvaluator
 {
     public:
-        ThresholdBackgroundEvaluator(string pathFitsFiles, bool debugMode);
-        float getBackgroundThresholdValue();
+        BlobsDistributionEvaluator(string pathFitsFiles, bool debugMode);
+        GaussianDistribution getMeanAndDeviation();
     private:
         string pathFitsFiles;
         bool debugMode;

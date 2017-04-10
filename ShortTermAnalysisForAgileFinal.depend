@@ -245,11 +245,11 @@
 	"Thresholder.h"
 	"Thresholder.h"
 
-1491754356 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/Main.cpp
+1491782438 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/Main.cpp
 	"GammaRayDetector.h"
-	"ThresholdBackgroundEvaluator.h"
+	"BlobsDistributionEvaluator.h"
 
-1491705855 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GammaRayDetector.h
+1491780691 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GammaRayDetector.h
 	<iostream>
 	<stdio.h>
 	"FitsToCvMatConverter.h"
@@ -338,10 +338,10 @@
 1491677532 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FitsToCvMatConverter.cpp
 	"FitsToCvMatConverter.h"
 
-1491704220 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FolderManager.cpp
+1491782628 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FolderManager.cpp
 	"FolderManager.h"
 
-1491754937 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GammaRayDetector.cpp
+1491780763 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GammaRayDetector.cpp
 	"GammaRayDetector.h"
 	"GammaRayDetector.h"
 
@@ -365,4 +365,12 @@
 
 1491753364 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/ThresholdBackgroundEvaluator.cpp
 	"ThresholdBackgroundEvaluator.h"
+
+1491780526 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/BlobsDistributionEvaluator.h
+	"FolderManager.h"
+	"FitsToCvMatConverter.h"
+	"BlobsFinder.h"
+
+1491782681 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/BlobsDistributionEvaluator.cpp
+	"BlobsDistributionEvaluator.h"
 

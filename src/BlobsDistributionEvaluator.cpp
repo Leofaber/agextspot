@@ -1,6 +1,6 @@
-#include "ThresholdBackgroundEvaluator.h"
+#include "BlobsDistributionEvaluator.h"
 
-ThresholdBackgroundEvaluator::ThresholdBackgroundEvaluator(string _pathFitsFiles, bool _debugMode)
+BlobsDistributionEvaluator::BlobsDistributionEvaluator(string _pathFitsFiles, bool _debugMode)
 {
     pathFitsFiles = _pathFitsFiles;
     debugMode = _debugMode;
@@ -8,9 +8,10 @@ ThresholdBackgroundEvaluator::ThresholdBackgroundEvaluator(string _pathFitsFiles
 
 
 
-float ThresholdBackgroundEvaluator::getBackgroundThresholdValue(){
+GaussianDistribution BlobsDistributionEvaluator::getMeanAndDeviation(){
 
-    float thresholdValue = 0;
+    GaussianDistribution gd;
+
 
     vector<string> fileNames;
     fileNames = FolderManager::getFilesFromFolder(pathFitsFiles);
@@ -24,27 +25,42 @@ float ThresholdBackgroundEvaluator::getBackgroundThresholdValue(){
 
     float count = 0;
     float total = blobsPixelsMeans.size();
-    cout << "TOTAL: " << total << endl;
-    for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
-        cout << *it << endl;
-        count += *it;
-    }
-    if(total>0)
-        thresholdValue = count/total;
-    else
-        thresholdValue = 0;
 
-    cout << "Analysis Complete:" << endl;
-    cout << "TOTAL MEAN: " << thresholdValue <<endl;
+    if(total == 0){
+        cout << "No blobs found." << endl;
+        getchar();
+        gd.mean = 0;
+        gd.deviation = 0;
+        return gd;
+    }
+    else{
+        ///Computing mean
+
+        for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
+            cout << *it << endl;
+            count += *it;
+        }
+        gd.mean = count/total;
+
+        ///Computing deviation
+        for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
+            cout << *it << endl;
+            gd.deviation += pow(*it - gd.mean, 2);
+        }
+        gd.deviation = sqrt(gd.deviation/total);
+
+    }
+
+
+
+
 
     destroyAllWindows();
-    getchar();
-
-    return thresholdValue;
+    return gd;
 
 }
 
-vector<float> ThresholdBackgroundEvaluator::getBlobsPixelsMeanInFitsFile(string pathToFile){
+vector<float> BlobsDistributionEvaluator::getBlobsPixelsMeanInFitsFile(string pathToFile){
 
     // GET BLOBS , COMPUTING MEANS
     string fitsFilePath = pathFitsFiles + "/" +pathToFile;

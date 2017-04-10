@@ -13,12 +13,13 @@ using namespace std;
 class GammaRayDetector
 {
 public:
-	GammaRayDetector(string fitsFilesPath, float backgroundThresholdValue,bool debugMode);
+	GammaRayDetector(string fitsFilesPath, float backgroundThresholdValue, float backgroundThresholdDeviation,bool debugMode);
 	~GammaRayDetector();
 	void detect(string fitsFileName);
 	void startAnalysis();
 private:
 	string fitsFilesPath;
 	float backgroundThresholdValue;
+	float backgroundThresholdDeviation;
 	bool debugMode;
  };
