@@ -20,7 +20,7 @@ int main(){
 
 	string fitsFilePath = "MappeSimulate/TestImages/50ImgSimF40bg15";
 
-    string simulatedFluxFitsFilesPath = "MappeSimulate/FluxImages/50ImgSimF40bg0";
+    string simulatedFluxFitsFilesPath = "MappeSimulate/FluxImages/50ImgSimF80bg0";
 
     string simulatedBackgroundFitsFilesPath = "MappeSimulate/BackgroundImages";
 

@@ -86,6 +86,7 @@
 		</Linker>
 		<Unit filename="Main.cpp" />
 		<Unit filename="include/Blob.h" />
+		<Unit filename="include/BlobsDistributionEvaluator.h" />
 		<Unit filename="include/BlobsFinder.h" />
 		<Unit filename="include/Filterer.h" />
 		<Unit filename="include/FitsToCvMatConverter.h" />
@@ -94,9 +95,9 @@
 		<Unit filename="include/GaussianFilterer.h" />
 		<Unit filename="include/HistogramStretching.h" />
 		<Unit filename="include/ImagePrinter.h" />
-		<Unit filename="include/ThresholdBackgroundEvaluator.h" />
 		<Unit filename="include/Thresholder.h" />
 		<Unit filename="src/Blob.cpp" />
+		<Unit filename="src/BlobsDistributionEvaluator.cpp" />
 		<Unit filename="src/BlobsFinder.cpp" />
 		<Unit filename="src/Filterer.cpp" />
 		<Unit filename="src/FitsToCvMatConverter.cpp" />
@@ -105,7 +106,6 @@
 		<Unit filename="src/GaussianFilterer.cpp" />
 		<Unit filename="src/HistogramStretching.cpp" />
 		<Unit filename="src/ImagePrinter.cpp" />
-		<Unit filename="src/ThresholdBackgroundEvaluator.cpp" />
 		<Unit filename="src/Thresholder.cpp" />
 		<Extensions>
 			<code_completion />
