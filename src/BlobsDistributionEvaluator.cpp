@@ -8,9 +8,10 @@ BlobsDistributionEvaluator::BlobsDistributionEvaluator(string _pathFitsFiles, bo
 
 
 
-GaussianDistribution BlobsDistributionEvaluator::getMeanAndDeviation(){
+normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(){
 
-    GaussianDistribution gd;
+    float mean;
+    float deviation;
 
 
     vector<string> fileNames;
@@ -29,8 +30,9 @@ GaussianDistribution BlobsDistributionEvaluator::getMeanAndDeviation(){
     if(total == 0){
         cout << "No blobs found." << endl;
         getchar();
-        gd.mean = 0;
-        gd.deviation = 0;
+        mean = 0;
+        deviation = 0;
+        normal_distribution<double> gd(mean,deviation);
         return gd;
     }
     else{
@@ -40,19 +42,19 @@ GaussianDistribution BlobsDistributionEvaluator::getMeanAndDeviation(){
             cout << *it << endl;
             count += *it;
         }
-        gd.mean = count/total;
+        mean = count/total;
 
         ///Computing deviation
         for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
             cout << *it << endl;
-            gd.deviation += pow(*it - gd.mean, 2);
+            deviation += pow(*it - mean, 2);
         }
-        gd.deviation = sqrt(gd.deviation/total);
+        deviation = sqrt(deviation/total);
 
     }
 
 
-
+    normal_distribution<double> gd(mean,deviation);
 
 
     destroyAllWindows();

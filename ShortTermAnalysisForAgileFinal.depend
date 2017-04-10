@@ -245,16 +245,18 @@
 	"Thresholder.h"
 	"Thresholder.h"
 
-1491782438 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/Main.cpp
+1491821576 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/Main.cpp
 	"GammaRayDetector.h"
 	"BlobsDistributionEvaluator.h"
 
-1491780691 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GammaRayDetector.h
+1491826021 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/GammaRayDetector.h
 	<iostream>
 	<stdio.h>
 	"FitsToCvMatConverter.h"
 	"FolderManager.h"
 	"BlobsFinder.h"
+	"ErrorEstimator.h"
+	<math.h>
 
 1491677532 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/FitsToCvMatConverter.h
 	"fitsio.h"
@@ -341,7 +343,7 @@
 1491782628 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/FolderManager.cpp
 	"FolderManager.h"
 
-1491780763 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GammaRayDetector.cpp
+1491826214 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/GammaRayDetector.cpp
 	"GammaRayDetector.h"
 	"GammaRayDetector.h"
 
@@ -366,11 +368,25 @@
 1491753364 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/ThresholdBackgroundEvaluator.cpp
 	"ThresholdBackgroundEvaluator.h"
 
-1491780526 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/BlobsDistributionEvaluator.h
+1491818744 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/BlobsDistributionEvaluator.h
 	"FolderManager.h"
 	"FitsToCvMatConverter.h"
 	"BlobsFinder.h"
+	<random>
 
-1491782681 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/BlobsDistributionEvaluator.cpp
+1491818994 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/BlobsDistributionEvaluator.cpp
 	"BlobsDistributionEvaluator.h"
+
+1491826489 /home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/include/ErrorEstimator.h
+	<vector>
+	<string>
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<iostream>
+	"Blob.h"
+	<math.h>
+
+1491826521 source:/home/leofaber/Documenti/Programmazione/c++/shorttermanalysisfinal/src/ErrorEstimator.cpp
+	"ErrorEstimator.h"
 

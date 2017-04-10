@@ -18,7 +18,7 @@ int main(){
 
 
 
-	string fitsFilePath = "MappeSimulate/TestImages/50ImgSimF40bg15";
+	string fitsFilePath = "MappeSimulate/TestImages/50ImgSimF80bg15";
 
     string simulatedFluxFitsFilesPath = "MappeSimulate/FluxImages/50ImgSimF80bg0";
 
@@ -27,30 +27,29 @@ int main(){
     bool debugMode = false;
 
     BlobsDistributionEvaluator fluxBlobsEvaluator(simulatedFluxFitsFilesPath, debugMode);
-	GaussianDistribution fluxGD = fluxBlobsEvaluator.getMeanAndDeviation();
+	normal_distribution<double> fluxGD = fluxBlobsEvaluator.getMeanAndDeviation();
 
 	cout << "\n *** Analysis of Flux Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << fluxGD.mean <<endl;
-    cout << "Standard Deviation: " << fluxGD.deviation << endl;
+    cout << "Mean: " << fluxGD.mean() <<endl;
+    cout << "Standard Deviation: " << fluxGD.stddev() << endl;
     getchar();
 
     BlobsDistributionEvaluator bgBlobsEvaluator(simulatedBackgroundFitsFilesPath, debugMode);
-	GaussianDistribution bgGD = bgBlobsEvaluator.getMeanAndDeviation();
+	normal_distribution<double> bgGD = bgBlobsEvaluator.getMeanAndDeviation();
+
 
     cout << "\n *** Analysis of Background Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << bgGD.mean <<endl;
-    cout << "Standard Deviation: " << bgGD.deviation << endl;
+    cout << "Mean: " << bgGD.mean() <<endl;
+    cout << "Standard Deviation: " << bgGD.stddev() << endl;
     getchar();
 
 
 
 
-	float backgroundThresholdValue = bgGD.mean;
-	float backgroundThresholdDeviation = bgGD.deviation;
 
 	debugMode = true;
 
- 	GammaRayDetector grd(fitsFilePath,backgroundThresholdValue,backgroundThresholdDeviation,debugMode);
+ 	GammaRayDetector grd(fitsFilePath,fluxGD,bgGD,debugMode);
 	grd.startAnalysis();
 
 

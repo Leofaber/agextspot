@@ -4,12 +4,20 @@
 
 
 
-GammaRayDetector::GammaRayDetector(string _fitsFilesPath, float _backgroundThresholdValue, float _backgroundThresholdDeviation, bool _debugMode)
+GammaRayDetector::GammaRayDetector(string _fitsFilesPath, normal_distribution<double> _fluxBlobMeansDistribution, normal_distribution<double> _bgBlobMeansDistribution, bool _debugMode)
 {   fitsFilesPath = _fitsFilesPath;
-	backgroundThresholdValue = _backgroundThresholdValue;
-	backgroundThresholdDeviation = _backgroundThresholdDeviation;
+	fluxBlobMeansDistribution = _fluxBlobMeansDistribution;
+	bgBlobMeansDistribution = _bgBlobMeansDistribution;
 	debugMode = _debugMode;
 
+	fluxDistributionAtZeroMean = computeProbabilityFromDistribution(fluxBlobMeansDistribution.mean(),fluxBlobMeansDistribution);
+    cout << "fluxDistributionAtZeroMean: " << fluxDistributionAtZeroMean << endl;
+
+
+	bgDistributionAtZeroMean = computeProbabilityFromDistribution(bgBlobMeansDistribution.mean(),bgBlobMeansDistribution);
+    cout << "bgDistributionAtZeroMean: " << bgDistributionAtZeroMean << endl;
+
+    errorEstimator = new ErrorEstimator(100,100);
 }
 
 
@@ -25,6 +33,10 @@ void GammaRayDetector::startAnalysis(){
        cout<<"\n\nAnalysis of: " << *it << endl;
        detect(*it);
     }
+
+    float errorMean = errorEstimator->errorMean();
+    cout << "Errore medio stimato: " << errorMean << endl;
+    getchar();
 
 }
 
@@ -50,6 +62,58 @@ void GammaRayDetector::detect(string fitsFileName)
         return;
     }
 
+    if(blobs.size()>0){
+
+        Mat temp3ChannelImage(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0));
+        ImagePrinter::printImageBlobs(temp3ChannelImage, blobs, "Found blobs");
+
+    }
+
+    /// 3 - Select most probable blob to be a flux
+
+    Blob* fluxBlob;
+
+
+
+    float max = 0;
+
+
+    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
+
+        Blob b = *i;
+        float blobMean = b.getPixelsMean();
+
+        float isFlux = computeProbabilityFromDistribution(blobMean, fluxBlobMeansDistribution);
+        float isBg = computeProbabilityFromDistribution(blobMean, bgBlobMeansDistribution);
+
+        float isFluxWithProbability = isFlux / fluxDistributionAtZeroMean;
+        float isBgWithProbability = isBg / bgDistributionAtZeroMean;
+
+        cout << "Il blob è: " <<endl;
+        cout << "flux with probability " << isFluxWithProbability << endl;
+        cout << "background with probability: " <<  isBgWithProbability << endl;
+
+        if(isFluxWithProbability > isBgWithProbability){
+
+            if(isFluxWithProbability>max){
+                max = isFluxWithProbability;
+                fluxBlob = &b;
+            }
+
+        }
+
+        //getchar();
+
+    }
+
+    cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;
+    Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
+    ImagePrinter::printImageBlob(tempImageRgb, *fluxBlob,"Flux blob");
+
+    /// 5 - ERROR ESTIMATION
+    errorEstimator->updateErrorList(fluxBlob);
+
+    /*
     if(blobs.size()>1){
 
         Mat temp3ChannelImage(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0));
@@ -58,11 +122,8 @@ void GammaRayDetector::detect(string fitsFileName)
 
     }
 
-
-
-
     /// 3 - THRESHOLDING -> Eliminate Background Blobs (mean <= backgroundThresholdValue)
-    vector<Blob> fluxBlob = Thresholder::makeThresholdingOnBlobPixelMean(blobs, backgroundThresholdValue);
+    vector<Blob> fluxBlob = Thresholder::makeThresholdingOnBlobPixelMean(blobs, bgBlobMeansDitribution.mean());
 
     if(fluxBlob.size()==0){
         //destroyAllWindows();
@@ -108,7 +169,7 @@ void GammaRayDetector::detect(string fitsFileName)
     ImagePrinter::printImageBlob(tempImageRgb, flux,"Flux blob");
 
 
-
+    */
 
 
 
@@ -118,3 +179,30 @@ void GammaRayDetector::detect(string fitsFileName)
 
     // COMPUTE REAL COORDINATES
 }
+
+float GammaRayDetector::computeProbabilityFromDistribution(float x,normal_distribution<double> distribution){
+    float mean = distribution.mean();
+    float stddev = distribution.stddev();
+
+
+    float probability = 0;
+
+    float multiplier = 1 / ( sqrt(2*M_PI*pow(stddev,2))   );
+
+    float exponent = -1 *( (pow(x-mean,2)) / (2*pow(stddev,2)) );
+
+    float exponential = exp(exponent);
+
+    probability = multiplier * exponential;
+
+    cout << "multiplier: " << multiplier << endl;
+    cout << "exponent: " << exponent << endl;
+    cout << "exponential: " << exponential << endl;
+
+
+
+
+
+    return probability;
+}
+

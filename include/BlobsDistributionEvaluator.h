@@ -4,17 +4,15 @@
 #include "FolderManager.h"
 #include "FitsToCvMatConverter.h"
 #include "BlobsFinder.h"
+#include <random>
 
-struct GaussianDistribution{
-    float mean;
-    float deviation;
-};
+
 
 class BlobsDistributionEvaluator
 {
     public:
         BlobsDistributionEvaluator(string pathFitsFiles, bool debugMode);
-        GaussianDistribution getMeanAndDeviation();
+        normal_distribution<double> getMeanAndDeviation();
     private:
         string pathFitsFiles;
         bool debugMode;

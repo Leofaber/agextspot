@@ -88,7 +88,7 @@
 		<Unit filename="include/Blob.h" />
 		<Unit filename="include/BlobsDistributionEvaluator.h" />
 		<Unit filename="include/BlobsFinder.h" />
-		<Unit filename="include/Filterer.h" />
+		<Unit filename="include/ErrorEstimator.h" />
 		<Unit filename="include/FitsToCvMatConverter.h" />
 		<Unit filename="include/FolderManager.h" />
 		<Unit filename="include/GammaRayDetector.h" />
@@ -99,7 +99,7 @@
 		<Unit filename="src/Blob.cpp" />
 		<Unit filename="src/BlobsDistributionEvaluator.cpp" />
 		<Unit filename="src/BlobsFinder.cpp" />
-		<Unit filename="src/Filterer.cpp" />
+		<Unit filename="src/ErrorEstimator.cpp" />
 		<Unit filename="src/FitsToCvMatConverter.cpp" />
 		<Unit filename="src/FolderManager.cpp" />
 		<Unit filename="src/GammaRayDetector.cpp" />
