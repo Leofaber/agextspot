@@ -11,7 +11,7 @@ using namespace std;
 int main(){
 
 
-    cout << "WELCOME TO AGILE GAMMA RAY FLARES SHORT TERM DETECTOR" << endl;
+    cout << "WELCOME TO AGILE GAMMA RAY FLARES (IN SHORT TERM IMAGES) DETECTOR" << endl;
     cout << "press any key to start!" <<endl;
     getchar();
 

@@ -26,7 +26,7 @@ class BlobsFinder
                 - gaussian filtering
                 - thresholding
         */
-        static vector<Blob> findBlobs(Mat image, bool debugMode);
+        static vector<Blob*> findBlobs(Mat image, bool debugMode);
 
     private:
         BlobsFinder();

@@ -79,13 +79,13 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroun
 }
 
 
-vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob b){
+vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
 
     vector<pair<string,float> > prediction;
 
-    float pixelMean = b.getPixelsMean();
-    float area = b.getNumberOfPixels();
-    float photons = b.getPhotonsInBlob();
+    float pixelMean = b->getPixelsMean();
+    float area = b->getNumberOfPixels();
+    float photons = b->getPhotonsInBlob();
     /// ADD ATTRIBUTE
 
     float bgPM = computeProbabilityFromDistribution(pixelMean,bgPixelMeanDistribution);
@@ -109,6 +109,11 @@ vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob b){
 
     prediction.push_back(make_pair("Background",probabilityOfBg));
     prediction.push_back(make_pair("Flux",probabilityOfFlux));
+
+
+    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is background " << " with probability: " << probabilityOfBg*100<<"%"<<endl;
+    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is flux " << " with probability: " << probabilityOfFlux*100<<"%"<<endl;
+
 
     return prediction;
 }

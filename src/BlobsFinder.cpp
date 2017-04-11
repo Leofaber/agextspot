@@ -5,7 +5,7 @@ BlobsFinder::BlobsFinder()
     //ctor
 }
 
-vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
+vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
     Mat photonImage = tempImage.clone();
 
@@ -18,19 +18,13 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	/// PRINTING IMAGE
 	if(debugMode){
         cout << "Stretching complete" <<endl;
-//        ImagePrinter::printImageInConsole(tempImage);
+        //ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindow(tempImage,"window1");
 
 	}
 
 
-
-
-
-
-
-
-	/// GAUSSIAN FILTERING
+    /// GAUSSIAN FILTERING
 	GaussianFilterer gaussianFilter(Size(23, 23), 3); // 17x17   2.5
 	tempImage = gaussianFilter.filter(tempImage);
 
@@ -38,7 +32,6 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	/// PRINTING IMAGE
 	if(debugMode){
         cout << "Gaussian Filtering complete" << endl;
-
         //ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindowWithStretching(tempImage, "window2");
 	}
@@ -50,8 +43,7 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	/// COMPUTING THRESHOLD
 	//float threshold = Thresholder::getThresholdFromPeaksMethod(tempImage);
 	float threshold = Thresholder::getThresholdFromPercentileMethod(tempImage,98.7);
-	//cout << "threshold: " << threshold << endl;
-	/// DO THRESHOLDING
+ 	/// DO THRESHOLDING
 	tempImage = Thresholder::makeThresholding(tempImage, threshold);
 
 	/// PRINTING IMAGE
@@ -62,7 +54,7 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	}
 
 
-    vector<Blob> blobs;
+    vector<Blob*> blobs;
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
 
@@ -73,7 +65,7 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
     for(vector<vector<Point> >::iterator i = contours.begin(); i < contours.end(); i++){
 
         vector<Point> currentBlob = *i;
-        blobs.push_back(Blob(currentBlob,tempImage,photonImage));
+        blobs.push_back(new Blob(currentBlob,tempImage,photonImage));
 
     }
 

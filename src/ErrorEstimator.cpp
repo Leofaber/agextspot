@@ -3,9 +3,7 @@
 ErrorEstimator::ErrorEstimator(int row, int cols, string _imagesTypes, int _numberOfImages)
 {
     center.x=row/2;
-//    cout << "riga centro immagine " << x << endl;
     center.y=cols/2;
-  //  cout << "colonna centro immagine " << y<< endl;
     imagesTypes = _imagesTypes;
     numberOfImages = _numberOfImages;
     fluxCount = 0;
@@ -13,9 +11,9 @@ ErrorEstimator::ErrorEstimator(int row, int cols, string _imagesTypes, int _numb
 }
 
 
-float ErrorEstimator ::getDistanceFromCenter(Blob b) {
+float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
     float distance =  0;
-    Point c = b.getCentroid();
+    Point c = b->getCentroid();
     float arg =  pow(c.x - center.x,2) +pow (c.y - center.y,2) ;
     distance = pow(arg , 0.5);
     cout << "Errore stimato: " << distance << endl;
@@ -23,9 +21,14 @@ float ErrorEstimator ::getDistanceFromCenter(Blob b) {
 }
 
  void ErrorEstimator :: updateErrorList(Blob* b) {
-     Blob b1 = *b;
-     float error = getDistanceFromCenter(b1);
-     errorListElement.push_back(error);
+     if(b==nullptr){
+        addNoFluxCount();
+     }
+     else{
+        addFluxCount();
+        float error = getDistanceFromCenter(b);
+        errorListElement.push_back(error);
+     }
  }
 
 void ErrorEstimator::addFluxCount(){

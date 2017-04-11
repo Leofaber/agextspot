@@ -14,17 +14,20 @@ GammaRayDetector::GammaRayDetector(string _fitsFilesPath, BayesianClassifierForB
 
 
 void GammaRayDetector::startAnalysis(){
-    vector<string> fileNames;
-    fileNames = FolderManager::getFilesFromFolder(fitsFilesPath);
+
+    vector<string> fileNames = FolderManager::getFilesFromFolder(fitsFilesPath);
+
     int count = 1;
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
 
-       cout<<"\n\nAnalysis of: " << *it << " ["<< count << "/"<< fileNames.size()<< "]"<< endl;
-       detect(*it);
-       count++;
+        cout<<"\n\nAnalysis of: " << *it << " ["<< count << "/"<< fileNames.size()<< "]"<< endl;
+
+        Blob* b = detect(*it);
+
+        errorEstimator->updateErrorList(b);
+
+        count++;
     }
-
-
 
     errorEstimator->showResults();
 
@@ -32,78 +35,97 @@ void GammaRayDetector::startAnalysis(){
 
 }
 
-void GammaRayDetector::detect(string fitsFileName)
+Blob* GammaRayDetector::detect(string fitsFileName)
 {
     string fitsFilePath = fitsFilesPath + "/" +fitsFileName;
-
 
 
     /// 1 - CONVERTING FITS TO MAT
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
 
 
-
-
     /// 2 - FINDING BLOBS -> stretching,gaussian filtering, percentile threshold
-    vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
+    vector<Blob*> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
 
-    if(blobs.size()==0){
-        //destroyAllWindows();
-        cout << "[Stretching,filtering,percentile threshold] No flux found." << endl;
-        errorEstimator->addNoFluxCount();
-        getchar();
-        return;
+    if(blobs.size()>0 && debugMode){
+        ImagePrinter::printImageBlobs(tempImage.rows,tempImage.cols, blobs, "Found blobs");
     }
 
-    if(blobs.size()>0){
+    /// 3 - SELECT MOST PROBABLE BLOB TO BE A FLUX
+    Blob* fluxBlob = getMostProbableFluxBlob(blobs);
 
-        Mat temp3ChannelImage(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0));
-        ImagePrinter::printImageBlobs(temp3ChannelImage, blobs, "Found blobs");
 
+    if(fluxBlob != nullptr && debugMode){
+        Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
+        ImagePrinter::printImageBlob(tempImageRgb, fluxBlob,"Flux blob");
+        waitKey(0);
     }
-
-    /// 3 - Select most probable blob to be a flux
-    Blob* fluxBlob = nullptr;
-    float max = 0;
-    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
-
-        Blob* b = &*i;
-
-
-        vector<pair<string,float> > predicted = reverendBayes->classify(*b);
-
-        float bgP = predicted[0].second;
-        float fluxP = predicted[1].second;
-
-        cout << b->getCentroid()<<" "<<predicted[0].first << " " << predicted[0].second*100<<"%"<<endl;
-        cout << b->getCentroid()<<" "<<predicted[1].first << " " << predicted[1].second*100<<"%"<<endl;
+    return fluxBlob;
+}
 
 
 
-        if(fluxP >= bgP && fluxP>max){
-             max = fluxP;
-            fluxBlob = b;
-         }
+ Blob* GammaRayDetector::getMostProbableFluxBlob(vector<Blob*> blobs){
 
-    }
+    if(blobs.size() > 0){
 
-    if(fluxBlob == nullptr){
-        cout << "No blob found." << endl;
-        errorEstimator->addNoFluxCount();
+        Blob * mostProbableBlob = nullptr;
+        float max = 0;
+        for(vector<Blob*>::iterator i = blobs.begin(); i != blobs.end(); i++){
+
+            Blob* b = *i;
+
+            vector<pair<string,float> > predicted = reverendBayes->classify(b);
+
+            float bgProbability = predicted[0].second;
+            float fluxProbability = predicted[1].second;
+
+            if(fluxProbability >= bgProbability && fluxProbability>max){
+                max = fluxProbability;
+                mostProbableBlob = b;
+             }
+
+        } // end for loop
+
+
+        if(mostProbableBlob != nullptr){
+            cout << "Flux found in "<< mostProbableBlob->getCentroid() <<" with probability: " << max <<"."<<endl;
+        }else{
+            cout << "No flux has been found." << endl;
+        }
+        return mostProbableBlob;
 
     }else{
-
-        cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;
-        Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
-        ImagePrinter::printImageBlob(tempImageRgb, *fluxBlob,"Flux blob");
-
-        /// 5 - ERROR ESTIMATION
-        errorEstimator->updateErrorList(fluxBlob);
-        errorEstimator->addFluxCount();
-
+        return nullptr;
     }
+ }
 
-    waitKey(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     Blob* fluxBlob = nullptr;
@@ -234,7 +256,4 @@ void GammaRayDetector::detect(string fitsFileName)
 
 
 
-
-    // COMPUTE REAL COORDINATES
-}
 

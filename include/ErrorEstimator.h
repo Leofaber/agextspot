@@ -17,24 +17,11 @@ class ErrorEstimator
         ErrorEstimator(int rows, int cols, string imagesTypes, int numberOfImages);
 
         /**
-            Returns the euclidean distance of the blob centroid from the center of the image
-        */
-        float getDistanceFromCenter(Blob b);
-
-
-        /**
-            Add to the errorListElement a new distance error. Must be called from the outside when a blob is found.
+            Add to the errorListElement a new distance error.
+            Call addFluxCount() or addNoFluxCount().
+            It is called from GammaRayDetector when a blob is found.
         */
         void updateErrorList(Blob* b);
-
-        /**
-            Update the fluxCount attribute adding a true positive blob.
-        */
-        void addFluxCount();
-        /**
-            Update the noFluxCount attribute adding a true negative blob.
-        */
-        void addNoFluxCount();
 
 
         /**
@@ -45,7 +32,30 @@ class ErrorEstimator
 
     private:
 
+
+        /**
+            Returns the euclidean distance of the blob centroid from the center of the image
+        */
+        float getDistanceFromCenter(Blob* b);
+
+        /**
+            Update the fluxCount attribute adding a true positive blob.
+        */
+        void addFluxCount();
+        /**
+            Update the noFluxCount attribute adding a true negative blob.
+        */
+        void addNoFluxCount();
+
+        /**
+            Returns the mean of the values of errorListElement.
+        */
         float getErrorMean();
+
+        /**
+            Returns noFluxCount if imagesTypes is "flux"
+            Return fluxCount if imagesTypes is "bg"
+        */
         int getFalseNegatives();
 
         vector<float> errorListElement;

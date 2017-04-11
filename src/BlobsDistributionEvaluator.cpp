@@ -76,21 +76,21 @@ vector<float> BlobsDistributionEvaluator::getAttributesInFitsFile(string pathFit
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
 
     /// FINDING BLOBS
-    vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
+    vector<Blob*> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
     vector<float> attributeValues;
-    for(vector<Blob>::iterator i = blobs.begin(); i!=blobs.end(); i++){
+    for(vector<Blob*>::iterator i = blobs.begin(); i!=blobs.end(); i++){
 
-        Blob b = *i;
+        Blob* b = *i;
 
         if(attribute == PIXELMEAN){
-            cout << "Mean: " << b.getPixelsMean() << endl;
-            attributeValues.push_back(b.getPixelsMean());
+            cout << "Mean: " << b->getPixelsMean() << endl;
+            attributeValues.push_back(b->getPixelsMean());
         }else if(attribute == AREA){
-            cout << "Area: " << b.getNumberOfPixels() << endl;
-            attributeValues.push_back(b.getNumberOfPixels());
+            cout << "Area: " << b->getNumberOfPixels() << endl;
+            attributeValues.push_back(b->getNumberOfPixels());
         }else if(attribute == PHOTONS){
-            cout << "Photons: " << b.getPhotonsInBlob() << endl;
-            attributeValues.push_back(b.getPhotonsInBlob());
+            cout << "Photons: " << b->getPhotonsInBlob() << endl;
+            attributeValues.push_back(b->getPhotonsInBlob());
         }
 
     }
@@ -117,7 +117,7 @@ float BlobsDistributionEvaluator::getFrequencyOfClass(string pathFitsFiles, bool
         Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
 
         /// FINDING BLOBS
-        vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
+        vector<Blob*> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
 
         count += blobs.size();
     }

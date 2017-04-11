@@ -16,7 +16,7 @@ class BayesianClassifierForBlobs
         /**
             Compute the probability for a Blob to be background and flux. Returns [ ("background", x%) , ("flux",1-x%) ]
         */
-        vector<pair<string,float> > classify(Blob b);
+        vector<pair<string,float> > classify(Blob* b);
 
 
     private:

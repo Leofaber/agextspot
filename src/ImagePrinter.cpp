@@ -44,16 +44,18 @@ void ImagePrinter::printImageInWindowWithStretching(Mat inputImage, string windo
 	waitKey(0);
 }
 
-void ImagePrinter::printImageBlobs(Mat inputImage, vector<Blob> blobs, string windowName){
-    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
-        printImageBlob(inputImage,*i,windowName);
+void ImagePrinter::printImageBlobs(int rows,int cols, vector<Blob*> blobs, string windowName){
+    Mat temp3ChannelImage(rows,cols, CV_8UC3, Scalar(0,0,0));
+    for(vector<Blob*>::iterator i = blobs.begin(); i != blobs.end(); i++){
+        printImageBlob(temp3ChannelImage,*i,windowName);
     }
+    waitKey(0);
 }
- void ImagePrinter::printImageBlob(Mat inputImage, Blob b, string windowName) {
+void ImagePrinter::printImageBlob(Mat inputImage, Blob* b, string windowName) {
    	Mat outputImage;
 
     ///DRAW CONTOUR
-    vector<Point> contour = b.getContour();
+    vector<Point> contour = b->getContour();
     Vec3b color( rand()&255, rand()&255, rand()&255 );
     for(vector<Point>::iterator i = contour.begin(); i != contour.end(); i++){
         Point p = *i;
@@ -61,12 +63,11 @@ void ImagePrinter::printImageBlobs(Mat inputImage, vector<Blob> blobs, string wi
     }
 
     ///DRAW CENTROID
-    Point centroid = b.getCentroid();
+    Point centroid = b->getCentroid();
     inputImage.at<Vec3b>(centroid.y, centroid.x) = Vec3b(0,0,255);
 
     namedWindow( windowName, CV_WINDOW_AUTOSIZE );
     resize(inputImage, outputImage, Size(0, 0), 3, 3, INTER_LINEAR);
     imshow( windowName, outputImage );
-    waitKey(0);
 
 }

@@ -15,8 +15,8 @@ public:
 	static void printImageInConsole(Mat inputImage);
 	static void printImageInWindowWithStretching(Mat inputImage, string windowName);
 	static void printImageInWindow(Mat inputImage, string windowName);
-	static void printImageBlob(Mat inputImage, Blob b, string windowName);
-	static void printImageBlobs(Mat inputImage, vector<Blob> blobs, string windowName);
+	static void printImageBlob(Mat inputImage, Blob* b, string windowName);
+	static void printImageBlobs(int rows,int cols,vector<Blob*> blobs, string windowName);
 
 private:
 	ImagePrinter();

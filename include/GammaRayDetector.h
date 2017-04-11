@@ -27,14 +27,20 @@ public:
 
     /**
         Open the fits file, convert it to Mat image, finds blobs, classify them with bayesian classifier, compute the
-        centroid of the blob in galactic coordinate.
+        centroid of the blob in galactic coordinate. Return the blob if found, eturn null_ptr instead.
     */
- 	void detect(string fitsFileName);
+ 	Blob* detect(string fitsFileName);
 
 
 
 private:
-    //float computeProbabilityFromDistribution(float ,normal_distribution<double> distribution);
+
+    /**
+        Given a blob list, for each blob, call Reverend Bayes to predict the probabilities.
+        Then computes the max and returns the most probable Blob to be a flux.
+    */
+    Blob* getMostProbableFluxBlob(vector<Blob*> blobs);
+
 	string fitsFilesPath;
  	bool debugMode;
 	ErrorEstimator* errorEstimator;
