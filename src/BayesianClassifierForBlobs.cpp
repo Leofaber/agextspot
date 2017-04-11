@@ -4,9 +4,22 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroun
 {
 
 
-    /// ATTENZIONE -> SE CAMBIA IL RAPPORTO DI IMMAGINI DI TRAIN BG/FLUX, CAMBIANO LE FREQUENZE DELLE CLASSI
-    bgFrequency = 0.5;
-    fluxFrequency = 0.5;
+    /// Frequency of classes
+    float countBgBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedBackgroundFitsFilesPath, debugMode);
+    float countFluxBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedFluxFitsFilesPath, debugMode);
+
+    float total = countBgBlobs + countFluxBlobs;
+
+    bgFrequency = countBgBlobs/total;
+    fluxFrequency = countFluxBlobs/total;
+
+    cout << "\n *** Number and Frequency of classes:" << endl;
+    cout << "Background Blobs: " << countBgBlobs <<" - " <<bgFrequency  <<endl;
+    cout << "Flux Blobs: " << countFluxBlobs <<" - " << fluxFrequency  <<endl;
+    getchar();
+
+
+
 
     /*
         CLASS BACKGROUND DISTRIBUTIONS
@@ -47,7 +60,7 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroun
 
     fluxAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, AREA, debugMode);
 
-	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
+	cout << "\n *** Analysis of AREA Flux Blobs Distribution Complete:" << endl;
     cout << "Mean: " << fluxAreaDistribution.mean() <<endl;
     cout << "Standard Deviation: " << fluxAreaDistribution.stddev() << endl;
     getchar();

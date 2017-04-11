@@ -11,13 +11,13 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
 
     /// STRETCHING
-	cout << "STRETCHING" << endl;
-	float r = 0.05;
+ 	float r = 0.05;
 	tempImage = HistogramStretching::nonLinearStretch(tempImage,r);
 
 
 	/// PRINTING IMAGE
 	if(debugMode){
+        cout << "Stretching complete" <<endl;
 //        ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindow(tempImage,"window1");
 
@@ -31,15 +31,16 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
 
 	/// GAUSSIAN FILTERING
-    cout << "GAUSSIAN FILTERING" << endl;
 	GaussianFilterer gaussianFilter(Size(23, 23), 3); // 17x17   2.5
 	tempImage = gaussianFilter.filter(tempImage);
 
 
 	/// PRINTING IMAGE
 	if(debugMode){
-            //ImagePrinter::printImageInConsole(tempImage);
-            ImagePrinter::printImageInWindowWithStretching(tempImage, "window2");
+        cout << "Gaussian Filtering complete" << endl;
+
+        //ImagePrinter::printImageInConsole(tempImage);
+        ImagePrinter::printImageInWindowWithStretching(tempImage, "window2");
 	}
 
 
@@ -47,7 +48,6 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
 
 	/// COMPUTING THRESHOLD
-    cout << "THRESHOLD" << endl;
 	//float threshold = Thresholder::getThresholdFromPeaksMethod(tempImage);
 	float threshold = Thresholder::getThresholdFromPercentileMethod(tempImage,98.7);
 	//cout << "threshold: " << threshold << endl;
@@ -56,8 +56,9 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
 	/// PRINTING IMAGE
 	if(debugMode){
-            //ImagePrinter::printImageInConsole(tempImage);
-            ImagePrinter::printImageInWindowWithStretching(tempImage, "window3");
+        cout << "Thresholding complete." << endl;
+        //ImagePrinter::printImageInConsole(tempImage);
+        ImagePrinter::printImageInWindowWithStretching(tempImage, "window3");
 	}
 
 

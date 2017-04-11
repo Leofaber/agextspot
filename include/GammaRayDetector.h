@@ -16,11 +16,25 @@ using namespace std;
 class GammaRayDetector
 {
 public:
+
 	GammaRayDetector(string fitsFilesPath, BayesianClassifierForBlobs* reverendBayes, ErrorEstimator* ee, bool debugMode);
+
+ 	/**
+        For each file in fitsFilesPath, call detect().
+    */
+ 	void startAnalysis();
+
+
+    /**
+        Open the fits file, convert it to Mat image, finds blobs, classify them with bayesian classifier, compute the
+        centroid of the blob in galactic coordinate.
+    */
  	void detect(string fitsFileName);
-	void startAnalysis();
-	float computeProbabilityFromDistribution(float ,normal_distribution<double> distribution);
+
+
+
 private:
+    //float computeProbabilityFromDistribution(float ,normal_distribution<double> distribution);
 	string fitsFilesPath;
  	bool debugMode;
 	ErrorEstimator* errorEstimator;

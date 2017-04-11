@@ -11,10 +11,12 @@ using namespace cv;
 class GaussianFilterer
 {
 public:
+
 	GaussianFilterer(Size kernelSize, double sigma);
-	virtual ~GaussianFilterer();
+    /**
+        Filters the image and returns a smoothed image
+    */
 	Mat filter(Mat inputImg);
-protected:
 private:
 	Size kernelSize;
 	double sigma;

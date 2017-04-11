@@ -19,14 +19,18 @@ using namespace std;
 class BlobsFinder
 {
     public:
+
+        /**
+            Return a list of Blobs. In order to find a Blob it does:
+                - non linear stretching
+                - gaussian filtering
+                - thresholding
+        */
         static vector<Blob> findBlobs(Mat image, bool debugMode);
-        static Point findCentroidOfMainBlob(vector<vector<Point> >& contours);
-    protected:
+
     private:
         BlobsFinder();
-        static Point computeCentroid(vector<Point >& currentBlob);
-        static float computeIntraClusterDistance(vector<Point >& currentBlob, Point centroid);
-        static float computeEuclideadDistanceBeetweenTwoPoints(Point p1, Point p2);
+
 };
 
 #endif // BLOBSFINDER_H

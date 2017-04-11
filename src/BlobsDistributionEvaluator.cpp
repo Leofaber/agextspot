@@ -100,3 +100,28 @@ vector<float> BlobsDistributionEvaluator::getAttributesInFitsFile(string pathFit
 
 
 }
+
+float BlobsDistributionEvaluator::getFrequencyOfClass(string pathFitsFiles, bool debugMode){
+
+    vector<string> fileNames = FolderManager::getFilesFromFolder(pathFitsFiles);
+
+    float count = 0;
+
+    for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
+
+        string fileName = (string) *it;
+
+        string fitsFilePath = pathFitsFiles + "/" +fileName;
+
+        /// CONVERTING FITS TO MAT
+        Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
+
+        /// FINDING BLOBS
+        vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
+
+        count += blobs.size();
+    }
+
+    return count;
+}
+

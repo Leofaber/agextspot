@@ -18,28 +18,47 @@ struct Pixel{
 class Blob
 {
     public:
+
+        /**
+            Create a new Blob starting from the contour pixels.
+            Computes the centroid of the blob.
+            Finds the pixels that are inside the blob.
+            Finds the number of photons inside the blob.
+            Compute the gray level pixel mean of the blob.
+        */
         Blob(vector<Point>& c, Mat image, Mat photonImage);
-        virtual ~Blob();
+
+
+        /**
+            GETTERS
+        */
         Point getCentroid();
         float getPixelsMean();
         vector<Point> getContour();
         int getNumberOfPixels();
         float getPhotonsInBlob();
-
-    protected:
-    private:
-
-        int numberOfPixels;
         vector<Pixel> getBlobPixels();
-        vector<Pixel> blobPixels;
-        void computeBlobPixelsBlob(vector<Point>& c, Mat image);
-        void computePhotonsBlob(Mat photonImage);
+
+
+
+     private:
+
         vector<Point> contour;
+
+
+        vector<Pixel> blobPixels;
+        int numberOfPixels;
+        vector<Pixel> computePixelsOfBlob(vector<Point>& c, Mat image);
+
+        float photonsInBlob;
+        float computePhotonsBlob(Mat photonImage);
+
         Point centroid;
-        void computeCentroid();
+        Point computeCentroid();
+
         float pixelMean;
         float computePixelMean();
-        float photonsInBlob;
+
 
 };
 

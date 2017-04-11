@@ -11,8 +11,11 @@ using namespace cv;
 class HistogramStretching
 {
     public:
+        /**
+            Stretches the image and returns the stretched image
+        */
         static Mat nonLinearStretch(Mat inputImage, float r);
-        static Mat stretch(Mat image);
+        static Mat linearStretch(Mat image);
     private:
         HistogramStretching();
 };

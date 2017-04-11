@@ -90,7 +90,7 @@ void GammaRayDetector::detect(string fitsFileName)
     if(fluxBlob == nullptr){
         cout << "No blob found." << endl;
         errorEstimator->addNoFluxCount();
-        return;
+
     }else{
 
         cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;

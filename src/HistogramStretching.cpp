@@ -21,7 +21,7 @@ Mat HistogramStretching::nonLinearStretch(Mat inputImage, float r)
 
 }
 
-Mat HistogramStretching::stretch(Mat inputImage){
+Mat HistogramStretching::linearStretch(Mat inputImage){
 	Mat image = inputImage.clone();
 	int rows = image.rows;
 	int cols = image.cols;

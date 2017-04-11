@@ -8,11 +8,6 @@ GaussianFilterer::GaussianFilterer(Size _kernelSize, double _sigma)
 	sigma = _sigma;
 }
 
-GaussianFilterer::~GaussianFilterer()
-{
-	//dtor
-}
-
 
 Mat GaussianFilterer::filter(Mat inputImg) {
 	Mat outputImg;

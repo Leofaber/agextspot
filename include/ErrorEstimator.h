@@ -15,21 +15,47 @@ class ErrorEstimator
 {
     public:
         ErrorEstimator(int rows, int cols, string imagesTypes, int numberOfImages);
-        virtual ~ErrorEstimator();
+
+        /**
+            Returns the euclidean distance of the blob centroid from the center of the image
+        */
         float getDistanceFromCenter(Blob b);
-        float updateErrorList(Blob* b);
-        float getErrorMean();
-        void showResults();
-        int getFalsePositives();
+
+
+        /**
+            Add to the errorListElement a new distance error. Must be called from the outside when a blob is found.
+        */
+        void updateErrorList(Blob* b);
+
+        /**
+            Update the fluxCount attribute adding a true positive blob.
+        */
         void addFluxCount();
+        /**
+            Update the noFluxCount attribute adding a true negative blob.
+        */
         void addNoFluxCount();
+
+
+        /**
+            Print on console the results in terms of error mean and false negatives.
+        */
+        void showResults();
+
+
     private:
+
+        float getErrorMean();
+        int getFalseNegatives();
+
+        vector<float> errorListElement;
+
         string imagesTypes;
         int numberOfImages;
         Point center;
-        vector<float> errorListElement;
         int fluxCount;
         int noFluxCount;
+
 };
 
 #endif // ERRORESTIMATOR_H

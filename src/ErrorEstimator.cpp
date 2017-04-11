@@ -12,10 +12,6 @@ ErrorEstimator::ErrorEstimator(int row, int cols, string _imagesTypes, int _numb
 
 }
 
-ErrorEstimator::~ErrorEstimator()
-{
-    //dtor
-}
 
 float ErrorEstimator ::getDistanceFromCenter(Blob b) {
     float distance =  0;
@@ -26,7 +22,7 @@ float ErrorEstimator ::getDistanceFromCenter(Blob b) {
     return distance;
 }
 
- float ErrorEstimator :: updateErrorList(Blob* b) {
+ void ErrorEstimator :: updateErrorList(Blob* b) {
      Blob b1 = *b;
      float error = getDistanceFromCenter(b1);
      errorListElement.push_back(error);
@@ -53,17 +49,17 @@ void ErrorEstimator::addNoFluxCount(){
 
  void ErrorEstimator::showResults(){
     float errorMean = getErrorMean();
-    int falsePositives = getFalsePositives();
+    int falsePositives = getFalseNegatives();
 
     cout << "\n*********************************************" << endl;
     cout << "Results of Analysis: "<<endl;
     cout << "Errors Mean: " << errorMean << endl;
-    cout << "False Positives: " << falsePositives << endl;
+    cout << "False Negatives: " << falsePositives << endl;
     cout << "************************************************" << endl;
 
  }
 
- int ErrorEstimator::getFalsePositives(){
+ int ErrorEstimator::getFalseNegatives(){
     if(imagesTypes=="flux"){
         return noFluxCount;
     }else{

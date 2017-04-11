@@ -37,7 +37,7 @@ void ImagePrinter::printImageInWindow(Mat inputImage, string windowName){
  }
 void ImagePrinter::printImageInWindowWithStretching(Mat inputImage, string windowName){
     Mat img = inputImage.clone();
-    img = HistogramStretching::stretch(img);
+    img = HistogramStretching::linearStretch(img);
     resize(img, img, Size(0, 0), 3, 3, INTER_LINEAR);
 	namedWindow(windowName, CV_WINDOW_AUTOSIZE);
 	imshow(windowName, img);
