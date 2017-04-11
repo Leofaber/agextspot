@@ -1,11 +1,14 @@
 #include "ErrorEstimator.h"
 
-ErrorEstimator::ErrorEstimator(int row, int cols)
+ErrorEstimator::ErrorEstimator(int row, int cols, string _imagesTypes, int _numberOfImages)
 {
     center.x=row/2;
 //    cout << "riga centro immagine " << x << endl;
     center.y=cols/2;
   //  cout << "colonna centro immagine " << y<< endl;
+    imagesTypes = _imagesTypes;
+    numberOfImages = _numberOfImages;
+    fluxCount = 0;
 
 }
 
@@ -29,7 +32,14 @@ float ErrorEstimator ::getDistanceFromCenter(Blob b) {
      errorListElement.push_back(error);
  }
 
- float ErrorEstimator :: errorMean() {
+void ErrorEstimator::addFluxCount(){
+     fluxCount++;
+}
+void ErrorEstimator::addNoFluxCount(){
+    noFluxCount++;
+}
+
+ float ErrorEstimator :: getErrorMean() {
     float errorMean = 0;
     float sum = 0;
     for(vector<float> :: iterator i=errorListElement.begin(); i != errorListElement.end(); i++) {
@@ -39,4 +49,24 @@ float ErrorEstimator ::getDistanceFromCenter(Blob b) {
 
     return errorMean = sum / errorListElement.size();
 
+ }
+
+ void ErrorEstimator::showResults(){
+    float errorMean = getErrorMean();
+    int falsePositives = getFalsePositives();
+
+    cout << "\n*********************************************" << endl;
+    cout << "Results of Analysis: "<<endl;
+    cout << "Errors Mean: " << errorMean << endl;
+    cout << "False Positives: " << falsePositives << endl;
+    cout << "************************************************" << endl;
+
+ }
+
+ int ErrorEstimator::getFalsePositives(){
+    if(imagesTypes=="flux"){
+        return noFluxCount;
+    }else{
+        return fluxCount;
+    }
  }

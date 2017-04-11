@@ -7,7 +7,7 @@ BlobsFinder::BlobsFinder()
 
 vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 
-
+    Mat photonImage = tempImage.clone();
 
 
     /// STRETCHING
@@ -72,7 +72,7 @@ vector<Blob> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
     for(vector<vector<Point> >::iterator i = contours.begin(); i < contours.end(); i++){
 
         vector<Point> currentBlob = *i;
-        blobs.push_back(Blob(currentBlob,tempImage));
+        blobs.push_back(Blob(currentBlob,tempImage,photonImage));
 
     }
 

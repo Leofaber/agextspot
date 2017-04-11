@@ -1,41 +1,33 @@
 #include "GammaRayDetector.h"
-#include "GammaRayDetector.h"
 
 
 
 
-GammaRayDetector::GammaRayDetector(string _fitsFilesPath, normal_distribution<double> _fluxBlobMeansDistribution, normal_distribution<double> _bgBlobMeansDistribution, bool _debugMode)
+GammaRayDetector::GammaRayDetector(string _fitsFilesPath, BayesianClassifierForBlobs* _reverendBayes, ErrorEstimator* _ee, bool _debugMode)
 {   fitsFilesPath = _fitsFilesPath;
-	fluxBlobMeansDistribution = _fluxBlobMeansDistribution;
-	bgBlobMeansDistribution = _bgBlobMeansDistribution;
-	debugMode = _debugMode;
-
-	fluxDistributionAtZeroMean = computeProbabilityFromDistribution(fluxBlobMeansDistribution.mean(),fluxBlobMeansDistribution);
-    cout << "fluxDistributionAtZeroMean: " << fluxDistributionAtZeroMean << endl;
-
-
-	bgDistributionAtZeroMean = computeProbabilityFromDistribution(bgBlobMeansDistribution.mean(),bgBlobMeansDistribution);
-    cout << "bgDistributionAtZeroMean: " << bgDistributionAtZeroMean << endl;
-
-    errorEstimator = new ErrorEstimator(100,100);
+ 	debugMode = _debugMode;
+    errorEstimator = _ee;
+    reverendBayes = _reverendBayes;
 }
 
 
-GammaRayDetector::~GammaRayDetector()
-{
-}
+
 
 void GammaRayDetector::startAnalysis(){
     vector<string> fileNames;
     fileNames = FolderManager::getFilesFromFolder(fitsFilesPath);
+    int count = 1;
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
 
-       cout<<"\n\nAnalysis of: " << *it << endl;
+       cout<<"\n\nAnalysis of: " << *it << " ["<< count << "/"<< fileNames.size()<< "]"<< endl;
        detect(*it);
+       count++;
     }
 
-    float errorMean = errorEstimator->errorMean();
-    cout << "Errore medio stimato: " << errorMean << endl;
+
+
+    errorEstimator->showResults();
+
     getchar();
 
 }
@@ -58,6 +50,7 @@ void GammaRayDetector::detect(string fitsFileName)
     if(blobs.size()==0){
         //destroyAllWindows();
         cout << "[Stretching,filtering,percentile threshold] No flux found." << endl;
+        errorEstimator->addNoFluxCount();
         getchar();
         return;
     }
@@ -70,10 +63,50 @@ void GammaRayDetector::detect(string fitsFileName)
     }
 
     /// 3 - Select most probable blob to be a flux
+    Blob* fluxBlob = nullptr;
+    float max = 0;
+    for(vector<Blob>::iterator i = blobs.begin(); i != blobs.end(); i++){
 
-    Blob* fluxBlob;
+        Blob* b = &*i;
 
 
+        vector<pair<string,float> > predicted = reverendBayes->classify(*b);
+
+        float bgP = predicted[0].second;
+        float fluxP = predicted[1].second;
+
+        cout << b->getCentroid()<<" "<<predicted[0].first << " " << predicted[0].second*100<<"%"<<endl;
+        cout << b->getCentroid()<<" "<<predicted[1].first << " " << predicted[1].second*100<<"%"<<endl;
+
+
+
+        if(fluxP >= bgP && fluxP>max){
+             max = fluxP;
+            fluxBlob = b;
+         }
+
+    }
+
+    if(fluxBlob == nullptr){
+        cout << "No blob found." << endl;
+        errorEstimator->addNoFluxCount();
+        return;
+    }else{
+
+        cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;
+        Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
+        ImagePrinter::printImageBlob(tempImageRgb, *fluxBlob,"Flux blob");
+
+        /// 5 - ERROR ESTIMATION
+        errorEstimator->updateErrorList(fluxBlob);
+        errorEstimator->addFluxCount();
+
+    }
+
+    waitKey(0);
+
+    /*
+    Blob* fluxBlob = nullptr;
 
     float max = 0;
 
@@ -93,10 +126,11 @@ void GammaRayDetector::detect(string fitsFileName)
         cout << "flux with probability " << isFluxWithProbability << endl;
         cout << "background with probability: " <<  isBgWithProbability << endl;
 
-        if(isFluxWithProbability > isBgWithProbability){
 
+        if(isFluxWithProbability > isBgWithProbability){
             if(isFluxWithProbability>max){
                 max = isFluxWithProbability;
+                cout << "INIZIALIZZO FLUX "<<endl;
                 fluxBlob = &b;
             }
 
@@ -106,12 +140,36 @@ void GammaRayDetector::detect(string fitsFileName)
 
     }
 
-    cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;
-    Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
-    ImagePrinter::printImageBlob(tempImageRgb, *fluxBlob,"Flux blob");
+    if(fluxBlob == nullptr){
+        cout << "No blob found." << endl;
+        errorEstimator->addNoFluxCount();
+        return;
+    }else{
 
-    /// 5 - ERROR ESTIMATION
-    errorEstimator->updateErrorList(fluxBlob);
+        cout << "Found flux in "<< fluxBlob->getCentroid() <<" with probability: " << max <<endl;
+        Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
+        ImagePrinter::printImageBlob(tempImageRgb, *fluxBlob,"Flux blob");
+
+        /// 5 - ERROR ESTIMATION
+        errorEstimator->updateErrorList(fluxBlob);
+        errorEstimator->addFluxCount();
+
+    }
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     if(blobs.size()>1){
@@ -178,31 +236,5 @@ void GammaRayDetector::detect(string fitsFileName)
 
 
     // COMPUTE REAL COORDINATES
-}
-
-float GammaRayDetector::computeProbabilityFromDistribution(float x,normal_distribution<double> distribution){
-    float mean = distribution.mean();
-    float stddev = distribution.stddev();
-
-
-    float probability = 0;
-
-    float multiplier = 1 / ( sqrt(2*M_PI*pow(stddev,2))   );
-
-    float exponent = -1 *( (pow(x-mean,2)) / (2*pow(stddev,2)) );
-
-    float exponential = exp(exponent);
-
-    probability = multiplier * exponential;
-
-    cout << "multiplier: " << multiplier << endl;
-    cout << "exponent: " << exponent << endl;
-    cout << "exponential: " << exponential << endl;
-
-
-
-
-
-    return probability;
 }
 

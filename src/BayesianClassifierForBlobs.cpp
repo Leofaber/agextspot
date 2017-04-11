@@ -1,0 +1,125 @@
+#include "BayesianClassifierForBlobs.h"
+
+BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroundFitsFilesPath,string simulatedFluxFitsFilesPath, bool debugMode)
+{
+
+
+    /// ATTENZIONE -> SE CAMBIA IL RAPPORTO DI IMMAGINI DI TRAIN BG/FLUX, CAMBIANO LE FREQUENZE DELLE CLASSI
+    bgFrequency = 0.5;
+    fluxFrequency = 0.5;
+
+    /*
+        CLASS BACKGROUND DISTRIBUTIONS
+    */
+    bgPixelMeanDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, PIXELMEAN ,debugMode);
+
+    cout << "\n *** Analysis of PIXEL MEAN Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPixelMeanDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgPixelMeanDistribution.stddev() << endl;
+    getchar();
+
+
+    bgAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, AREA ,debugMode);
+
+    cout << "\n *** Analysis of AREA Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgAreaDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgAreaDistribution.stddev() << endl;
+    getchar();
+
+
+    bgPhotonsInBlobDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, PHOTONS, debugMode);
+
+	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
+    getchar();
+
+    /*
+        CLASS FLUX DISTRIBUTIONS
+    */
+    fluxPixelMeanDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PIXELMEAN, debugMode);
+
+	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPixelMeanDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPixelMeanDistribution.stddev() << endl;
+    getchar();
+
+
+    fluxAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, AREA, debugMode);
+
+	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxAreaDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxAreaDistribution.stddev() << endl;
+    getchar();
+
+
+
+    fluxPhotonsInBlobDistribution= BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PHOTONS, debugMode);
+
+	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
+    getchar();
+
+
+
+}
+
+
+vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob b){
+
+    vector<pair<string,float> > prediction;
+
+    float pixelMean = b.getPixelsMean();
+    float area = b.getNumberOfPixels();
+    float photons = b.getPhotonsInBlob();
+    /// ADD ATTRIBUTE
+
+    float bgPM = computeProbabilityFromDistribution(pixelMean,bgPixelMeanDistribution);
+    float bgA = computeProbabilityFromDistribution(area, bgAreaDistribution);
+    float bgP = computeProbabilityFromDistribution(photons, bgPhotonsInBlobDistribution);
+    /// ADD DISTR VALUE
+
+
+    float fluxPM = computeProbabilityFromDistribution(pixelMean,fluxPixelMeanDistribution);
+    float fluxA = computeProbabilityFromDistribution(area, fluxAreaDistribution);
+    float fluxP = computeProbabilityFromDistribution(photons, fluxPhotonsInBlobDistribution);
+    /// ADD DISTR VALUE
+
+    float likelyHoodOfBackground =  bgPM*bgA*bgP*bgFrequency;
+    float likelyHoodOfFlux = fluxPM*fluxA*fluxP*fluxFrequency;
+
+    float sum = likelyHoodOfBackground+likelyHoodOfFlux;
+
+    float probabilityOfBg = likelyHoodOfBackground/sum;
+    float probabilityOfFlux = likelyHoodOfFlux/sum;
+
+    prediction.push_back(make_pair("Background",probabilityOfBg));
+    prediction.push_back(make_pair("Flux",probabilityOfFlux));
+
+    return prediction;
+}
+
+
+float BayesianClassifierForBlobs::computeProbabilityFromDistribution(float x,normal_distribution<double> distribution){
+    float mean = distribution.mean();
+    float stddev = distribution.stddev();
+
+
+    float probability = 0;
+
+    float multiplier = 1 / ( sqrt(2*M_PI*pow(stddev,2))   );
+
+    float exponent = -1 *( (pow(x-mean,2)) / (2*pow(stddev,2)) );
+
+    float exponential = exp(exponent);
+
+    probability = multiplier * exponential;
+
+   // cout << "multiplier: " << multiplier << endl;
+   // cout << "exponent: " << exponent << endl;
+  //  cout << "exponential: " << exponential << endl;
+
+    return probability;
+}
+

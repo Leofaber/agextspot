@@ -1,31 +1,33 @@
 #include "BlobsDistributionEvaluator.h"
 
-BlobsDistributionEvaluator::BlobsDistributionEvaluator(string _pathFitsFiles, bool _debugMode)
+BlobsDistributionEvaluator::BlobsDistributionEvaluator()
 {
-    pathFitsFiles = _pathFitsFiles;
-    debugMode = _debugMode;
+
 }
 
 
 
-normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(){
+normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(string pathFitsFiles, AttributeType attribute, bool debugMode){
 
     float mean;
     float deviation;
 
 
-    vector<string> fileNames;
-    fileNames = FolderManager::getFilesFromFolder(pathFitsFiles);
-    vector<float> blobsPixelsMeans;
+    vector<string> fileNames = FolderManager::getFilesFromFolder(pathFitsFiles);
+
+    // il vettore di attributi per i quali si vuole calcolare la distribuzione
+    vector<float> blobsAttribute;
+
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
        cout<< *it << endl;
        string fileName = (string) *it;
-       vector<float> blobsPixelsMeanInFitsFile = getBlobsPixelsMeanInFitsFile(*it);
-       blobsPixelsMeans.insert( blobsPixelsMeans.end(), blobsPixelsMeanInFitsFile.begin(), blobsPixelsMeanInFitsFile.end() );
+       // si cerca i valori dei quell'attributo nei blobs cercati in un file Fits
+       vector<float> blobsAttributeInFitsFile = BlobsDistributionEvaluator::getAttributesInFitsFile(pathFitsFiles,*it, attribute, debugMode);
+       blobsAttribute.insert( blobsAttribute.end(), blobsAttributeInFitsFile.begin(), blobsAttributeInFitsFile.end() );
     }
 
     float count = 0;
-    float total = blobsPixelsMeans.size();
+    float total = blobsAttribute.size();
 
     if(total == 0){
         cout << "No blobs found." << endl;
@@ -38,18 +40,22 @@ normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(){
     else{
         ///Computing mean
 
-        for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
+        for(vector<float>::iterator it=blobsAttribute.begin() ; it < blobsAttribute.end(); it++) {
             cout << *it << endl;
             count += *it;
         }
         mean = count/total;
-
+        cout << "mean: " << mean << " total: " << total << endl;
         ///Computing deviation
-        for(vector<float>::iterator it=blobsPixelsMeans.begin() ; it < blobsPixelsMeans.end(); it++) {
+        for(vector<float>::iterator it=blobsAttribute.begin() ; it < blobsAttribute.end(); it++) {
             cout << *it << endl;
-            deviation += pow(*it - mean, 2);
+            float term = pow(*it - mean, 2);
+            //cout << "term "<< term << endl;
+            deviation += term;
         }
+        //cout << "[BDE getmeananddev()]deviation: " << deviation << " total: " << total << endl;
         deviation = sqrt(deviation/total);
+        cout << "deviation: " << deviation << endl;
 
     }
 
@@ -62,7 +68,7 @@ normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(){
 
 }
 
-vector<float> BlobsDistributionEvaluator::getBlobsPixelsMeanInFitsFile(string pathToFile){
+vector<float> BlobsDistributionEvaluator::getAttributesInFitsFile(string pathFitsFiles,string pathToFile, AttributeType attribute, bool debugMode){
 
     // GET BLOBS , COMPUTING MEANS
     string fitsFilePath = pathFitsFiles + "/" +pathToFile;
@@ -71,16 +77,26 @@ vector<float> BlobsDistributionEvaluator::getBlobsPixelsMeanInFitsFile(string pa
 
     /// FINDING BLOBS
     vector<Blob> blobs = BlobsFinder::findBlobs(tempImage,debugMode);
-    vector<float> means;
+    vector<float> attributeValues;
     for(vector<Blob>::iterator i = blobs.begin(); i!=blobs.end(); i++){
 
         Blob b = *i;
-        cout << "Mean: " << b.getPixelsMean() << endl;
-        means.push_back(b.getPixelsMean());
+
+        if(attribute == PIXELMEAN){
+            cout << "Mean: " << b.getPixelsMean() << endl;
+            attributeValues.push_back(b.getPixelsMean());
+        }else if(attribute == AREA){
+            cout << "Area: " << b.getNumberOfPixels() << endl;
+            attributeValues.push_back(b.getNumberOfPixels());
+        }else if(attribute == PHOTONS){
+            cout << "Photons: " << b.getPhotonsInBlob() << endl;
+            attributeValues.push_back(b.getPhotonsInBlob());
+        }
+
     }
 
 
-    return means;
+    return attributeValues;
 
 
 }

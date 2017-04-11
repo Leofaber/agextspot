@@ -18,12 +18,13 @@ struct Pixel{
 class Blob
 {
     public:
-        Blob(vector<Point>& c, Mat image);
+        Blob(vector<Point>& c, Mat image, Mat photonImage);
         virtual ~Blob();
         Point getCentroid();
         float getPixelsMean();
         vector<Point> getContour();
         int getNumberOfPixels();
+        float getPhotonsInBlob();
 
     protected:
     private:
@@ -31,13 +32,14 @@ class Blob
         int numberOfPixels;
         vector<Pixel> getBlobPixels();
         vector<Pixel> blobPixels;
-        void computeBlobPixels(vector<Point>& c, Mat image);
+        void computeBlobPixelsBlob(vector<Point>& c, Mat image);
+        void computePhotonsBlob(Mat photonImage);
         vector<Point> contour;
         Point centroid;
         void computeCentroid();
         float pixelMean;
         float computePixelMean();
-
+        float photonsInBlob;
 
 };
 

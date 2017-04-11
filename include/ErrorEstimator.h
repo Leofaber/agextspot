@@ -14,14 +14,22 @@
 class ErrorEstimator
 {
     public:
-        ErrorEstimator(int rows, int cols);
+        ErrorEstimator(int rows, int cols, string imagesTypes, int numberOfImages);
         virtual ~ErrorEstimator();
         float getDistanceFromCenter(Blob b);
         float updateErrorList(Blob* b);
-        float errorMean();
-        private:
+        float getErrorMean();
+        void showResults();
+        int getFalsePositives();
+        void addFluxCount();
+        void addNoFluxCount();
+    private:
+        string imagesTypes;
+        int numberOfImages;
         Point center;
         vector<float> errorListElement;
+        int fluxCount;
+        int noFluxCount;
 };
 
 #endif // ERRORESTIMATOR_H

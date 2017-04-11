@@ -85,6 +85,7 @@
 			<Add directory="../../../../opencv-2.4.13/release/bin" />
 		</Linker>
 		<Unit filename="Main.cpp" />
+		<Unit filename="include/BayesianClassifierForBlobs.h" />
 		<Unit filename="include/Blob.h" />
 		<Unit filename="include/BlobsDistributionEvaluator.h" />
 		<Unit filename="include/BlobsFinder.h" />
@@ -96,6 +97,7 @@
 		<Unit filename="include/HistogramStretching.h" />
 		<Unit filename="include/ImagePrinter.h" />
 		<Unit filename="include/Thresholder.h" />
+		<Unit filename="src/BayesianClassifierForBlobs.cpp" />
 		<Unit filename="src/Blob.cpp" />
 		<Unit filename="src/BlobsDistributionEvaluator.cpp" />
 		<Unit filename="src/BlobsFinder.cpp" />

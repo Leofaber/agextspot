@@ -6,17 +6,15 @@
 #include "BlobsFinder.h"
 #include <random>
 
-
+enum AttributeType { PIXELMEAN = 1, AREA = 2, PHOTONS = 3};
 
 class BlobsDistributionEvaluator
 {
     public:
-        BlobsDistributionEvaluator(string pathFitsFiles, bool debugMode);
-        normal_distribution<double> getMeanAndDeviation();
+        static normal_distribution<double> getMeanAndDeviation(string pathFitsFiles, AttributeType attribute, bool debugMode);
     private:
-        string pathFitsFiles;
-        bool debugMode;
-        vector<float> getBlobsPixelsMeanInFitsFile(string pathToFile);
+         BlobsDistributionEvaluator();
+         static vector<float> getAttributesInFitsFile(string pathFitsFiles, string pathToFile, AttributeType attribute, bool debugMode);
 };
 
 #endif // THRESHOLDBACKGROUNDEVALUATOR_H
