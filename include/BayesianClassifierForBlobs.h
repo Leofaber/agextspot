@@ -18,6 +18,10 @@ class BayesianClassifierForBlobs
         */
         vector<pair<string,float> > classify(Blob* b);
 
+        /**
+            Prints the mean and standard deviation of all the distributions
+        */
+        void showDistributionsValues();
 
     private:
 
@@ -28,15 +32,18 @@ class BayesianClassifierForBlobs
         float computeProbabilityFromDistribution(float x,normal_distribution<double> distribution);
 
         normal_distribution<double> fluxPixelMeanDistribution;
+        normal_distribution<double> bgPixelMeanDistribution;
         normal_distribution<double> fluxAreaDistribution;
-		normal_distribution<double> bgPixelMeanDistribution;
         normal_distribution<double> bgAreaDistribution;
         normal_distribution<double> fluxPhotonsInBlobDistribution;
         normal_distribution<double> bgPhotonsInBlobDistribution;
+        normal_distribution<double> fluxPhotonsClosenessDistribution;
+        normal_distribution<double> bgPhotonsClosenessDistribution;
         /// ADD DISTRIBUTION IF NEEDED
 
 
-
+        float countBgBlobs;
+        float countFluxBlobs;
         float bgFrequency;
         float fluxFrequency;
 

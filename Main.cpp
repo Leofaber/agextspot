@@ -36,7 +36,7 @@ int main(){
 
 
 
-	debugMode = true;
+	debugMode = false;
 	/// Classe per la rilevazione delle sorgenti di raggi gamma
     GammaRayDetector grd(testSetPath,reverendoBayes,ee,debugMode);
     grd.startAnalysis();

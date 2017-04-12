@@ -30,15 +30,40 @@ class Blob
 
 
         /**
-            GETTERS
+            Return the centroid of the blob
         */
         Point getCentroid();
+
+        /**
+            Return the sum of all the grey levels of the pixels of the blob divided by the number of those pixels.
+        */
         float getPixelsMean();
+
+        /**
+            Return all the contour points
+        */
         vector<Point> getContour();
+
+        /**
+            Return the number of pixels inside the blob
+        */
         int getNumberOfPixels();
+
+        /**
+            Return the number of photons inside the blob (before any stretching or smoothing)
+        */
         float getPhotonsInBlob();
+
+        /**
+            Return all the Pixels (a Point with a grey level) that are inside the blob
+        */
         vector<Pixel> getBlobPixels();
 
+
+        /**
+            Return the sum of the distances of each photons from the centroid divided by the number of photons
+        */
+        float getPhotonsCloseness();
 
 
      private:
@@ -59,7 +84,10 @@ class Blob
         float pixelMean;
         float computePixelMean();
 
+        float photonsCloseness;
+        float computePhotonsCloseness(Mat photonImage);
 
+        float getDistanceFromCentroid(Point p);
 };
 
 #endif // BLOB_H

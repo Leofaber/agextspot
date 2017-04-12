@@ -12,13 +12,14 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage)
     numberOfPixels = blobPixels.size();
     cout << "Pixels of Blob: " << numberOfPixels << endl;
 
+    pixelMean = computePixelMean();
+    cout << "Pixels mean: " << pixelMean << endl;
 
     photonsInBlob = computePhotonsBlob(photonImage);
     cout << "Photons in Blob: " << photonsInBlob << endl;
 
-
-    pixelMean = computePixelMean();
-    cout << "Pixels mean: " << pixelMean << endl;
+    photonsCloseness = computePhotonsCloseness(photonImage);
+    cout << "Photons Closeness: " << photonsCloseness << endl;
 
 }
 
@@ -38,6 +39,9 @@ float Blob::getPhotonsInBlob() {
 }
 float Blob::getPixelsMean(){
     return pixelMean;
+}
+float Blob::getPhotonsCloseness(){
+    return photonsCloseness;
 }
 
 
@@ -94,4 +98,34 @@ float Blob::computePixelMean(){
     }
 
     return greyLevelCount/numberOfBlobPixels;
+}
+
+float Blob::computePhotonsCloseness(Mat photonImage){
+    float photonsCloseness = 0;
+    float countDistances = 0;
+    float countPhotons = 0;
+    for(vector<Pixel>::iterator i = blobPixels.begin(); i != blobPixels.end(); i++){
+        Pixel p = *i;
+        int _greyLevel = (int) photonImage.at<uchar>(p.p);
+
+        if(_greyLevel > 0){
+            // if in a Pixel there are 2 photons the distance is double.
+            countDistances += getDistanceFromCentroid(p.p)*_greyLevel;
+            countPhotons += _greyLevel;
+        }
+     }
+     cout << "countDistances: " << countDistances << endl;
+     cout << "countPhotons: " << countPhotons << endl;
+    if(countPhotons==0)
+        return 0;
+    photonsCloseness = countDistances/countPhotons;
+    return photonsCloseness;
+}
+
+float Blob::getDistanceFromCentroid(Point photon) {
+    float distance =  0;
+    Point centroid = getCentroid();
+    float arg =  pow(photon.x - centroid.x,2) +pow (photon.y - centroid.y,2) ;
+    distance = pow(arg , 0.5);
+    return distance;
 }

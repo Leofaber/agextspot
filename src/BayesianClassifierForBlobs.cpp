@@ -5,74 +5,45 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroun
 
 
     /// Frequency of classes
-    float countBgBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedBackgroundFitsFilesPath, debugMode);
-    float countFluxBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedFluxFitsFilesPath, debugMode);
+    countBgBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedBackgroundFitsFilesPath, debugMode);
+    countFluxBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedFluxFitsFilesPath, debugMode);
 
     float total = countBgBlobs + countFluxBlobs;
 
     bgFrequency = countBgBlobs/total;
     fluxFrequency = countFluxBlobs/total;
 
-    cout << "\n *** Number and Frequency of classes:" << endl;
-    cout << "Background Blobs: " << countBgBlobs <<" - " <<bgFrequency  <<endl;
-    cout << "Flux Blobs: " << countFluxBlobs <<" - " << fluxFrequency  <<endl;
-    getchar();
 
 
 
 
-    /*
-        CLASS BACKGROUND DISTRIBUTIONS
+
+    /**
+        ADD DISTRIBUTION IF NEEDED
     */
+
     bgPixelMeanDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, PIXELMEAN ,debugMode);
 
-    cout << "\n *** Analysis of PIXEL MEAN Background Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << bgPixelMeanDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgPixelMeanDistribution.stddev() << endl;
-    getchar();
-
+    fluxPixelMeanDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PIXELMEAN, debugMode);
 
     bgAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, AREA ,debugMode);
 
-    cout << "\n *** Analysis of AREA Background Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << bgAreaDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgAreaDistribution.stddev() << endl;
-    getchar();
-
+    fluxAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, AREA, debugMode);
 
     bgPhotonsInBlobDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, PHOTONS, debugMode);
 
-	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
-    getchar();
-
-    /*
-        CLASS FLUX DISTRIBUTIONS
-    */
-    fluxPixelMeanDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PIXELMEAN, debugMode);
-
-	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << fluxPixelMeanDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPixelMeanDistribution.stddev() << endl;
-    getchar();
-
-
-    fluxAreaDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, AREA, debugMode);
-
-	cout << "\n *** Analysis of AREA Flux Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << fluxAreaDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxAreaDistribution.stddev() << endl;
-    getchar();
-
-
-
     fluxPhotonsInBlobDistribution= BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PHOTONS, debugMode);
 
-	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
-    getchar();
+    bgPhotonsClosenessDistribution = BlobsDistributionEvaluator::getMeanAndDeviation(simulatedBackgroundFitsFilesPath, PHOTONSCLOSENESS, debugMode);
+
+    fluxPhotonsClosenessDistribution= BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PHOTONSCLOSENESS, debugMode);
+
+
+
+    /**
+        Prints everythings
+    */
+    showDistributionsValues();
 
 
 
@@ -141,3 +112,61 @@ float BayesianClassifierForBlobs::computeProbabilityFromDistribution(float x,nor
     return probability;
 }
 
+
+void BayesianClassifierForBlobs::showDistributionsValues(){
+
+    cout << "\n *** Number and Frequency of classes:" << endl;
+    cout << "Background Blobs: " << countBgBlobs <<" - " <<bgFrequency  <<endl;
+    cout << "Flux Blobs: " << countFluxBlobs <<" - " << fluxFrequency  <<endl;
+
+    cout << "\n *** Analysis of PIXEL MEAN Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPixelMeanDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgPixelMeanDistribution.stddev() <<endl;
+
+
+	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPixelMeanDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPixelMeanDistribution.stddev() << endl;
+
+
+    cout << "\n *** Analysis of AREA Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgAreaDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgAreaDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of AREA Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxAreaDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxAreaDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
+
+
+    cout << "\n *** Analysis of PHOTONS CLOSENESS Background Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << bgPhotonsClosenessDistribution .mean() <<endl;
+    cout << "Standard Deviation: " << bgPhotonsClosenessDistribution.stddev() << endl;
+
+
+	cout << "\n *** Analysis of PHOTONS CLOSENESS Flux Blobs Distribution Complete:" << endl;
+    cout << "Mean: " << fluxPhotonsClosenessDistribution.mean() <<endl;
+    cout << "Standard Deviation: " << fluxPhotonsClosenessDistribution.stddev() << endl;
+
+    getchar();
+}

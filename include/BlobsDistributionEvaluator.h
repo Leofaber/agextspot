@@ -6,7 +6,7 @@
 #include "BlobsFinder.h"
 #include <random>
 
-enum AttributeType { PIXELMEAN = 1, AREA = 2, PHOTONS = 3}; /// ADD ATTRIBUTE IF NEEDED
+enum AttributeType { PIXELMEAN = 1, AREA = 2, PHOTONS = 3, PHOTONSCLOSENESS = 4}; /// ADD ATTRIBUTE IF NEEDED
 
 class BlobsDistributionEvaluator
 {

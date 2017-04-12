@@ -21,7 +21,13 @@ class ErrorEstimator
             Call addFluxCount() or addNoFluxCount().
             It is called from GammaRayDetector when a blob is found.
         */
-        void updateErrorList(Blob* b);
+        void updateErrorList(Blob* b, string fileName);
+
+        float computeFMeasure();
+
+        float computeAccuracy();
+
+        float computeSimpleAccuracy();
 
 
         /**
@@ -31,6 +37,20 @@ class ErrorEstimator
 
 
     private:
+        /**
+            Compute the precision
+        */
+        float computePrecision();
+
+        /**
+            Compute the recall
+        */
+        float computeRecall();
+
+        /**
+            Compute the specificity
+        */
+        float computeSpecificity();
 
 
         /**
@@ -39,13 +59,23 @@ class ErrorEstimator
         float getDistanceFromCenter(Blob* b);
 
         /**
-            Update the fluxCount attribute adding a true positive blob.
+            Update the TruePositiveCount attribute adding a true positive blob.
         */
-        void addFluxCount();
+        void addTruePositiveCount();
         /**
-            Update the noFluxCount attribute adding a true negative blob.
+            Update the FalsePositiveCount attribute adding a true negative blob.
         */
-        void addNoFluxCount();
+        void addFalsePositiveCount();
+
+        /**
+            Update the FalseNegativeCount attribute adding a true negative blob.
+        */
+        void addFalseNegativeCount();
+
+        /**
+            Update the TrueNegativeCount attribute adding a true negative blob.
+        */
+        void addTrueNegativeCount();
 
         /**
             Returns the mean of the values of errorListElement.
@@ -63,8 +93,15 @@ class ErrorEstimator
         string imagesTypes;
         int numberOfImages;
         Point center;
-        int fluxCount;
-        int noFluxCount;
+        float tpCount;
+        float fpCount;
+        float tnCount;
+        float fnCount;
+        float fClass;
+        float bClass;
+        float precision;
+        float recall;
+        float specificity;
 
 };
 

@@ -9,10 +9,6 @@ BlobsDistributionEvaluator::BlobsDistributionEvaluator()
 
 normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(string pathFitsFiles, AttributeType attribute, bool debugMode){
 
-    float mean;
-    float deviation;
-
-
     vector<string> fileNames = FolderManager::getFilesFromFolder(pathFitsFiles);
 
     // il vettore di attributi per i quali si vuole calcolare la distribuzione
@@ -21,13 +17,17 @@ normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(stri
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
        cout<< *it << endl;
        string fileName = (string) *it;
-       // si cerca i valori dei quell'attributo nei blobs cercati in un file Fits
+       // si cerca i valori dei quell'attributo nei blobs trovati in un file Fits
        vector<float> blobsAttributeInFitsFile = BlobsDistributionEvaluator::getAttributesInFitsFile(pathFitsFiles,*it, attribute, debugMode);
        blobsAttribute.insert( blobsAttribute.end(), blobsAttributeInFitsFile.begin(), blobsAttributeInFitsFile.end() );
     }
 
-    float count = 0;
-    float total = blobsAttribute.size();
+
+    double mean = 0;
+    double deviation = 0;
+
+    double count = 0;
+    double total = blobsAttribute.size();
 
     if(total == 0){
         cout << "No blobs found." << endl;
@@ -49,11 +49,11 @@ normal_distribution<double> BlobsDistributionEvaluator::getMeanAndDeviation(stri
         ///Computing deviation
         for(vector<float>::iterator it=blobsAttribute.begin() ; it < blobsAttribute.end(); it++) {
             cout << *it << endl;
-            float term = pow(*it - mean, 2);
-            //cout << "term "<< term << endl;
+            double term = pow(*it - mean, 2);
+            cout << "term "<< term << endl;
             deviation += term;
         }
-        //cout << "[BDE getmeananddev()]deviation: " << deviation << " total: " << total << endl;
+        cout << "[BDE getmeananddev()]deviation: " << deviation << " total: " << total << endl;
         deviation = sqrt(deviation/total);
         cout << "deviation: " << deviation << endl;
 
@@ -91,6 +91,9 @@ vector<float> BlobsDistributionEvaluator::getAttributesInFitsFile(string pathFit
         }else if(attribute == PHOTONS){
             cout << "Photons: " << b->getPhotonsInBlob() << endl;
             attributeValues.push_back(b->getPhotonsInBlob());
+        }else if(attribute == PHOTONSCLOSENESS){
+            cout << "Photons Closeness: " << b->getPhotonsCloseness() << endl;
+            attributeValues.push_back(b->getPhotonsCloseness());
         }
 
     }
@@ -124,4 +127,3 @@ float BlobsDistributionEvaluator::getFrequencyOfClass(string pathFitsFiles, bool
 
     return count;
 }
-

@@ -24,7 +24,7 @@ void GammaRayDetector::startAnalysis(){
 
         Blob* b = detect(*it);
 
-        errorEstimator->updateErrorList(b);
+        errorEstimator->updateErrorList(b,*it);
 
         count++;
     }
@@ -91,11 +91,12 @@ Blob* GammaRayDetector::detect(string fitsFileName)
         if(mostProbableBlob != nullptr){
             cout << "Flux found in "<< mostProbableBlob->getCentroid() <<" with probability: " << max <<"."<<endl;
         }else{
-            cout << "No flux has been found." << endl;
+
         }
         return mostProbableBlob;
 
     }else{
+        cout << "No flux has been found." << endl;
         return nullptr;
     }
  }
