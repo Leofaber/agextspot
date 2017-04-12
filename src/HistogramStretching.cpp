@@ -51,13 +51,7 @@ Mat HistogramStretching::linearStretch(Mat inputImage){
 		for (int j = 0; j < cols; ++j)
 		{
 			int pixelValue = (int)image.at<uchar>(i, j);
-			int newPixelValue;
-			//if (pixelValue <= 0)
-				//newPixelValue = 1;
-			//else
-				newPixelValue = pixelValue*slope;
-
-
+			int newPixelValue = pixelValue*slope;
 			image.at<uchar>(i, j) = (uchar)newPixelValue;
 
 		}

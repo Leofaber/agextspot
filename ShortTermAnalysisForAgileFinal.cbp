@@ -16,8 +16,8 @@
 					<Add option="-std=c++14" />
 					<Add option="-g" />
 					<Add directory="include" />
-					<Add directory="/home/leofaber/cfitsio" />
-					<Add directory="/home/leofaber/opencv-2.4.13/include" />
+					<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/cfitsio" />
+					<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/opencv-2.4.13/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lopencv_calib3d" />
@@ -38,8 +38,8 @@
 					<Add option="-lopencv_video" />
 					<Add option="-lopencv_videostab" />
 					<Add option="-pthread" />
-					<Add library="/home/leofaber/cfitsio/libcfitsio.a" />
-					<Add directory="/home/leofaber/opencv-2.4.13/release/bin" />
+					<Add library="../../Librerie/c++/cfitsio/libcfitsio.a" />
+					<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/opencv-2.4.13/release/bin" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -60,7 +60,8 @@
 			<Add option="-Wall" />
 			<Add option="-g" />
 			<Add directory="include" />
-			<Add directory="../../../../opencv-2.4.13/include" />
+			<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/opencv-2.4.13/include" />
+			<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/cfitsio" />
 		</Compiler>
 		<Linker>
 			<Add option="-lopencv_calib3d" />
@@ -81,8 +82,8 @@
 			<Add option="-lopencv_video" />
 			<Add option="-lopencv_videostab" />
 			<Add option="-pthread" />
-			<Add library="/home/leofaber/cfitsio/libcfitsio.a" />
-			<Add directory="../../../../opencv-2.4.13/release/bin" />
+			<Add library="/home/leofaber/Documenti/Programmazione/Librerie/c++/cfitsio/libcfitsio.a" />
+			<Add directory="/home/leofaber/Documenti/Programmazione/Librerie/c++/opencv-2.4.13/release/bin" />
 		</Linker>
 		<Unit filename="Main.cpp" />
 		<Unit filename="include/BayesianClassifierForBlobs.h" />

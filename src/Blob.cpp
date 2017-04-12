@@ -60,7 +60,7 @@ vector<Pixel> Blob::computePixelsOfBlob(vector<Point>& c, Mat image){
         for(int j=0; j < image.cols; j++){
             Point p(j,i);
             double isInside = pointPolygonTest(c,p,false);
-            if(isInside > 0 | isInside == 0){
+            if( (isInside > 0) | (isInside == 0)){
              //   cout << "Point " << p << " belongs to blob with grey level "<< (int)image.at<uchar>(i,j)<< endl;
                 Pixel pixel;
                 pixel.greyLevel = (int)image.at<uchar>(i,j);

@@ -17,11 +17,11 @@ int main(){
 
 
 
-	string testSetPath = "MappeSimulate/TestImages/50ImgSimF80bg15";
+	string testSetPath = "Dataset/TestSet";
 
-    string simulatedFluxFitsFilesPath = "MappeSimulate/FluxImages/50ImgSimF80bg0";
+    string trainSetFlux = "Dataset/TrainSet/flux";
 
-    string simulatedBackgroundFitsFilesPath = "MappeSimulate/BackgroundImages";
+    string trainSetBg = "Dataset/TrainSet/bg";
 
 
 
@@ -32,7 +32,7 @@ int main(){
 
     bool debugMode = false;
     /// Classificatore Bayesiano per la classificazione dei blobs in flusso/background
-    BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(simulatedBackgroundFitsFilesPath,simulatedFluxFitsFilesPath,debugMode);
+    BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
 
 
 
