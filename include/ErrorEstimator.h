@@ -18,7 +18,6 @@ class ErrorEstimator
 
         /**
             Add to the errorListElement a new distance error.
-            Call addFluxCount() or addNoFluxCount().
             It is called from GammaRayDetector when a blob is found.
         */
         void updateErrorList(Blob* b, string fileName);
@@ -80,7 +79,12 @@ class ErrorEstimator
         /**
             Returns the mean of the values of errorListElement.
         */
-        float getErrorMean();
+        float getDistanceErrorMean();
+
+        /**
+            Returns the standard deviation of the values of errorListElement.
+        */
+        float getDistanceErrorStdDev();
 
         /**
             Returns noFluxCount if imagesTypes is "flux"

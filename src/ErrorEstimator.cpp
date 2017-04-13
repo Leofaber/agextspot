@@ -22,7 +22,7 @@ float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
 
  void ErrorEstimator :: updateErrorList(Blob* b, string fileName) {
     char classChar = fileName.at(0);
-    cout << "Il primo carattere " << classChar << endl;
+    //cout << "Il primo carattere " << classChar << endl;
      if(b==nullptr && classChar=='F'){
         fClass++;
         addFalseNegativeCount();
@@ -84,7 +84,7 @@ float ErrorEstimator :: computeFMeasure() {
 float ErrorEstimator :: computeAccuracy() {
     recall = computeRecall();
     specificity = computeSpecificity();
-    return recall*tpCount/(bClass+fClass) + specificity*tnCount/(bClass+fClass);
+    return recall* (tpCount+fpCount)/(bClass+fClass) + specificity* (tnCount+fnCount)/(bClass+fClass);
 }
 
 float ErrorEstimator :: computeSimpleAccuracy() {
@@ -93,7 +93,7 @@ float ErrorEstimator :: computeSimpleAccuracy() {
 
 
 
- float ErrorEstimator :: getErrorMean() {
+ float ErrorEstimator :: getDistanceErrorMean() {
     float errorMean = 0;
     float sum = 0;
     for(vector<float> :: iterator i=errorListElement.begin(); i != errorListElement.end(); i++) {
@@ -103,18 +103,29 @@ float ErrorEstimator :: computeSimpleAccuracy() {
 
     return errorMean = sum / errorListElement.size();
 
+}
+
+float ErrorEstimator :: getDistanceErrorStdDev(){
+    float mean = getDistanceErrorMean();
+    float deviation = 0;
+    for(vector<float> :: iterator i=errorListElement.begin(); i != errorListElement.end(); i++) {
+        double term = pow(*i - mean, 2);
+        deviation += term;
+    }
+    float total = errorListElement.size();
+    return sqrt(deviation/total);
  }
 
- void ErrorEstimator::showResults(){
-    float errorMean = getErrorMean();
 
+ void ErrorEstimator::showResults(){
 
     cout << "\n*********************************************" << endl;
     cout << "Results of Analysis: "<<endl;
-    cout << "Distances Error Mean: " << errorMean << endl;
-    cout << "Accuracy: " << computeAccuracy() << endl;
-    cout << "Simple Accuracy: " << computeSimpleAccuracy() << endl;
-    cout << "FMeasure: " << computeFMeasure() << endl;
+    cout << "Number of istances: " << "class Flux: " << fClass << " class Background: " << bClass << " total: " << fClass+bClass << endl;
+    cout << "Distances Error Mean and Variance: " << getDistanceErrorMean() << " +- " << getDistanceErrorStdDev()<<endl;
+    cout << "Accuracy: " << computeAccuracy()*100<<"%" << endl;
+    //cout << "Simple Accuracy: " << computeSimpleAccuracy()*100<<"%" << endl;
+    cout << "FMeasure: " << computeFMeasure()*100<<"%" <<endl;
     cout << "************************************************" << endl;
 
  }

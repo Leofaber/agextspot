@@ -89,7 +89,7 @@ Blob* GammaRayDetector::detect(string fitsFileName)
 
 
         if(mostProbableBlob != nullptr){
-            cout << "Flux found in "<< mostProbableBlob->getCentroid() <<" with probability: " << max <<"."<<endl;
+            cout << "Flux found in "<< mostProbableBlob->getCentroid() <<" with probability: " << max*100 <<"%."<<endl;
         }else{
 
         }
