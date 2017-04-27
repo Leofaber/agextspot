@@ -8,8 +8,7 @@ class BayesianClassifierForBlobs
     public:
 
         /**
-            Use the BlobsDistributionEvaluator class to compute the frequencies of the classes background/flux,
-            and the distributions of the attributes.
+            Calls learnFromTrainingSet to learn the distributions and shows them.
         */
         BayesianClassifierForBlobs(string simulatedBackgroundFitsFilesPath,string simulatedFluxFitsFilesPath, bool debugMode);
 
@@ -24,6 +23,17 @@ class BayesianClassifierForBlobs
         void showDistributionsValues();
 
     private:
+
+        string simulatedBackgroundFitsFilesPath;
+        string simulatedFluxFitsFilesPath;
+        bool debugMode;
+
+        /**
+            Use the BlobsDistributionEvaluator class to compute the frequencies of the classes background/flux,
+            and the distributions of the attributes.
+        */
+        void learnFromTrainingSet();
+
 
         /**
             Compute the probability of an attribute value, given a distribution, from the Gaussian Equation.
@@ -46,6 +56,8 @@ class BayesianClassifierForBlobs
         float countFluxBlobs;
         float bgFrequency;
         float fluxFrequency;
+
+
 
 };
 

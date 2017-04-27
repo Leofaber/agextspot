@@ -26,7 +26,7 @@ class Blob
             Finds the number of photons inside the blob.
             Compute the gray level pixel mean of the blob.
         */
-        Blob(vector<Point>& c, Mat image, Mat photonImage);
+        Blob(vector<Point>& c, Mat image, Mat photonImage,bool debugMode);
 
 
         /**

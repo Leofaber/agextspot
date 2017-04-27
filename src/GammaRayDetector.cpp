@@ -15,11 +15,12 @@ GammaRayDetector::GammaRayDetector(string _fitsFilesPath, BayesianClassifierForB
 
 void GammaRayDetector::startAnalysis(){
 
-    vector<string> fileNames = FolderManager::getFilesFromFolder(fitsFilesPath);
+    vector<string> fileNames = FolderManager::getFileNamesFromFolder(fitsFilesPath);
 
     int count = 1;
     for(vector<string>::iterator it=fileNames.begin() ; it < fileNames.end(); it++) {
 
+        if(debugMode)
         cout<<"\n\nAnalysis of: " << *it << " ["<< count << "/"<< fileNames.size()<< "]"<< endl;
 
         Blob* b = detect(*it);
@@ -91,7 +92,7 @@ Blob* GammaRayDetector::detect(string fitsFileName)
         if(mostProbableBlob != nullptr){
             cout << "Flux found in "<< mostProbableBlob->getCentroid() <<" with probability: " << max*100 <<"%."<<endl;
         }else{
-
+            cout << "No flux has been found." << endl;
         }
         return mostProbableBlob;
 

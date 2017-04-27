@@ -25,15 +25,17 @@ public:
  	void startAnalysis();
 
 
+
+
+
+
+private:
+
     /**
         Open the fits file, convert it to Mat image, finds blobs, classify them with bayesian classifier, compute the
         centroid of the blob in galactic coordinate. Return the blob if found, eturn null_ptr instead.
     */
  	Blob* detect(string fitsFileName);
-
-
-
-private:
 
     /**
         Given a blob list, for each blob, call Reverend Bayes to predict the probabilities.

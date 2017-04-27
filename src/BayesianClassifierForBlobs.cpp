@@ -1,8 +1,29 @@
 #include "BayesianClassifierForBlobs.h"
 
-BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroundFitsFilesPath,string simulatedFluxFitsFilesPath, bool debugMode)
+BayesianClassifierForBlobs::BayesianClassifierForBlobs(string _simulatedBackgroundFitsFilesPath,string _simulatedFluxFitsFilesPath, bool _debugMode)
 {
 
+    simulatedBackgroundFitsFilesPath = _simulatedBackgroundFitsFilesPath;
+
+    simulatedFluxFitsFilesPath = _simulatedFluxFitsFilesPath;
+
+    debugMode = _debugMode;
+
+    learnFromTrainingSet();
+
+    /**
+        Prints everythings
+    */
+    showDistributionsValues();
+
+
+
+}
+
+void BayesianClassifierForBlobs::learnFromTrainingSet(){
+
+
+    cout << "\n** Learning from training set **\n" << endl;
 
     /// Frequency of classes
     countBgBlobs = BlobsDistributionEvaluator::getFrequencyOfClass(simulatedBackgroundFitsFilesPath, debugMode);
@@ -38,17 +59,7 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string simulatedBackgroun
 
     fluxPhotonsClosenessDistribution= BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PHOTONSCLOSENESS, debugMode);
 
-
-
-    /**
-        Prints everythings
-    */
-    showDistributionsValues();
-
-
-
 }
-
 
 vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
 

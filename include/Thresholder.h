@@ -11,7 +11,7 @@ using namespace std;
 class Thresholder
 {
 public:
-	static Mat makeThresholding(cv::Mat inputImage, double t);
+	static Mat makeThresholding(Mat inputImage, double t);
 	static int getThresholdFromPeaksMethod(Mat histogram);
 	static int getThresholdFromPercentileMethod(Mat image, float percentile);
     static vector<Blob> makeThresholdingOnBlobPixelMean(vector<Blob> blobs,float backgroundThresholdValue);

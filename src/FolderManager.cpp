@@ -4,13 +4,13 @@ FolderManager::FolderManager()
 {
 }
 
-vector<string> FolderManager::getFilesFromFolder(string folderpath){
+vector<string> FolderManager::getFileNamesFromFolder(string folderpath){
 
     /*OPEN MAP DIRECTORY*/
     vector<string> fileNames;
 	DIR *pdir = NULL;
 	struct dirent *pent = NULL;
-	cout <<"folderpath:"<< folderpath << endl;
+	//cout <<"Folderpath: "<< folderpath << endl;
 	pdir = opendir (folderpath.c_str());
     if (pdir == NULL)                   // if pdir wasn't initialised correctly
         {

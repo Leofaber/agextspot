@@ -48,19 +48,19 @@ float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
 
 void ErrorEstimator::addTruePositiveCount(){
     tpCount++;
-    cout << "Veri positivi: " << tpCount << endl;
+    //cout << "Veri positivi: " << tpCount << endl;
 }
 void ErrorEstimator::addFalsePositiveCount(){
      fpCount++;
-     cout << "Falsi positivi: " << fpCount << endl;
+     //cout << "Falsi positivi: " << fpCount << endl;
 }
 void ErrorEstimator::addTrueNegativeCount(){
     tnCount++;
-    cout << "Veri negativi: " << tnCount << endl;
+    //cout << "Veri negativi: " << tnCount << endl;
 }
 void ErrorEstimator::addFalseNegativeCount(){
     fnCount++;
-    cout << "Falsi negativi: " << fnCount << endl;
+    //cout << "Falsi negativi: " << fnCount << endl;
 }
 
 float ErrorEstimator :: computePrecision() {
@@ -116,6 +116,13 @@ float ErrorEstimator :: getDistanceErrorStdDev(){
     return sqrt(deviation/total);
  }
 
+ float ErrorEstimator::computeFalseNegativeRate(){
+    return fnCount/(tpCount+fnCount);
+ }
+
+ float ErrorEstimator::computeFalsePositiveRate(){
+    return fpCount/(fpCount+tnCount);
+ }
 
  void ErrorEstimator::showResults(){
 
@@ -123,6 +130,9 @@ float ErrorEstimator :: getDistanceErrorStdDev(){
     cout << "Results of Analysis: "<<endl;
     cout << "Number of istances: " << "class Flux: " << fClass << " class Background: " << bClass << " total: " << fClass+bClass << endl;
     cout << "Distances Error Mean and Variance: " << getDistanceErrorMean() << " +- " << getDistanceErrorStdDev()<<endl;
+    cout << "FN: "<<fnCount<<" FP: "<<fpCount<<" TP: "<<tpCount<<" TF:"<<tnCount<<endl;
+    cout << "False Negatives Rate: " << computeFalseNegativeRate()*100<<"%  (miss rate)"<<endl;
+    cout << "False Positives Rate: " << computeFalsePositiveRate()*100<<"%  (false alarm rate)"<<endl;
     cout << "Accuracy: " << computeAccuracy()*100<<"%" << endl;
     //cout << "Simple Accuracy: " << computeSimpleAccuracy()*100<<"%" << endl;
     cout << "FMeasure: " << computeFMeasure()*100<<"%" <<endl;

@@ -54,6 +54,8 @@ vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	}
 
 
+	/// FIND THE CONTOUR OF EACH BLOB
+
     vector<Blob*> blobs;
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
@@ -65,7 +67,8 @@ vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
     for(vector<vector<Point> >::iterator i = contours.begin(); i < contours.end(); i++){
 
         vector<Point> currentBlob = *i;
-        blobs.push_back(new Blob(currentBlob,tempImage,photonImage));
+        /// CREATING A BLOB
+        blobs.push_back(new Blob(currentBlob,tempImage,photonImage,debugMode));
 
     }
 

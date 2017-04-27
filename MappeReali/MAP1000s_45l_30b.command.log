@@ -1,8 +1,0 @@
-cp /scratch/prod/agile-B24-r5//share/AG_ctsmapgen5.par . 
-export PFILES=.:$PFILES; /scratch/prod/agile-B24-r5//bin/AG_ctsmapgen5 MAP1000s_45l_30b.cts.gz /AGILE_PROC3/FM3.119_ASDC2/INDEX/EVT.index None  50 0.5 45.000001 30 180.0  80 6 5 ARC 416529609.0 416530609 100 50000 0 60
-cp /scratch/prod/agile-B24-r5//share/AG_expmapgen5.par . 
-export PFILES=.:$PFILES; /scratch/prod/agile-B24-r5//bin/AG_expmapgen5 MAP1000s_45l_30b.exp.gz /AGILE_PROC3//DATA_ASDC2/INDEX/LOG.log.index /scratch/prod/agile-B24-r5///model/scientific_analysis/data/AG_GRID_G0017_SFMG_I0025.sar.gz  None  None  None 50 0.5 45.000001 30 180.0 80 0.5 360.0 5.0 6 ARC 2 160 2.1 416529609.0 416530609 100 50000 0 60
-cp /scratch/prod/agile-B24-r5//share/AG_gasmapgen5.par . 
-export PFILES=.:$PFILES; /scratch/prod/agile-B24-r5//bin/AG_gasmapgen5 MAP1000s_45l_30b.exp.gz MAP1000s_45l_30b.gas.gz /scratch/prod/agile-B24-r5///model/scientific_analysis/data/100_50000.SKY002.SFMG_I0025.disp.conv.sky.gz  /scratch/prod/agile-B24-r5///model/scientific_analysis/data/100_50000.SKY002.SFMG_I0025.disp.conv.sky.gz 
-cp /scratch/prod/agile-B24-r5//share/AG_intmapgen5.par . 
-export PFILES=.:$PFILES; /scratch/prod/agile-B24-r5//bin/AG_intmapgen5 MAP1000s_45l_30b.exp.gz MAP1000s_45l_30b.int.gz MAP1000s_45l_30b.cts.gz

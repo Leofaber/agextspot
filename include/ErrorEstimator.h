@@ -22,12 +22,6 @@ class ErrorEstimator
         */
         void updateErrorList(Blob* b, string fileName);
 
-        float computeFMeasure();
-
-        float computeAccuracy();
-
-        float computeSimpleAccuracy();
-
 
         /**
             Print on console the results in terms of error mean and false negatives.
@@ -36,6 +30,17 @@ class ErrorEstimator
 
 
     private:
+
+        float computeFMeasure();
+
+        float computeAccuracy();
+
+        float computeSimpleAccuracy();
+
+        float computeFalseNegativeRate();
+
+        float computeFalsePositiveRate();
+
         /**
             Compute the precision
         */
@@ -86,11 +91,7 @@ class ErrorEstimator
         */
         float getDistanceErrorStdDev();
 
-        /**
-            Returns noFluxCount if imagesTypes is "flux"
-            Return fluxCount if imagesTypes is "bg"
-        */
-        int getFalseNegatives();
+
 
         vector<float> errorListElement;
 

@@ -1,26 +1,30 @@
 #include "Blob.h"
 
-Blob::Blob(vector<Point>& c, Mat image, Mat photonImage)
+Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
 {
     contour = c;
-    cout << "Creating a new Blob. Number of contours pixels: " << c.size() << endl;
 
     centroid = computeCentroid();
-    cout << "Centroid of Blob: " << centroid << endl;
 
     blobPixels = computePixelsOfBlob(c,image);
+
     numberOfPixels = blobPixels.size();
-    cout << "Pixels of Blob: " << numberOfPixels << endl;
 
     pixelMean = computePixelMean();
-    cout << "Pixels mean: " << pixelMean << endl;
 
     photonsInBlob = computePhotonsBlob(photonImage);
-    cout << "Photons in Blob: " << photonsInBlob << endl;
 
     photonsCloseness = computePhotonsCloseness(photonImage);
-    cout << "Photons Closeness: " << photonsCloseness << endl;
 
+
+    if(debugMode){
+        cout << "Creating a new Blob. Number of contours pixels: " << c.size() << endl;
+        cout << "Centroid of Blob: " << centroid << endl;
+        cout << "Pixels of Blob: " << numberOfPixels << endl;
+        cout << "Pixels mean: " << pixelMean << endl;
+        cout << "Photons in Blob: " << photonsInBlob << endl;
+        cout << "Photons Closeness: " << photonsCloseness << endl;
+    }
 }
 
 
@@ -114,8 +118,8 @@ float Blob::computePhotonsCloseness(Mat photonImage){
             countPhotons += _greyLevel;
         }
      }
-     cout << "countDistances: " << countDistances << endl;
-     cout << "countPhotons: " << countPhotons << endl;
+  //   cout << "countDistances: " << countDistances << endl;
+  //   cout << "countPhotons: " << countPhotons << endl;
     if(countPhotons==0)
         return 0;
     photonsCloseness = countDistances/countPhotons;

@@ -14,7 +14,7 @@ class FolderManager
 {
     public:
 
-        static vector<string> getFilesFromFolder(string folderPath);
+        static vector<string> getFileNamesFromFolder(string folderPath);
 
     private:
         FolderManager();
