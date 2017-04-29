@@ -20,6 +20,17 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(string _simulatedBackgrou
 
 }
 
+BayesianClassifierForBlobs::BayesianClassifierForBlobs(bool _debugMode){
+    debugMode = _debugMode;
+
+    /**
+        Prints everythings
+    */
+    showDistributionsValues();
+}
+
+
+
 void BayesianClassifierForBlobs::learnFromTrainingSet(){
 
 
@@ -84,8 +95,14 @@ vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
     float fluxPC = computeProbabilityFromDistribution(photonsCloseness, fluxPhotonsClosenessDistribution);
     /// ADD DISTR VALUE
 
-    float likelyHoodOfBackground = bgPC*bgA*/*bgPbgPM*/bgFrequency;
-    float likelyHoodOfFlux = fluxPC*fluxA*/*fluxPfluxPM*/fluxFrequency;
+
+
+    /// THE LIKELYHOOD CALCULUS .. MODIFY THIS TO CHANGE ATTRIBUTES OF ANALYSIS
+    //float likelyHoodOfBackground = bgPC*bgA*/*bgPbgPM*/bgFrequency;
+    //float likelyHoodOfFlux = fluxPC*fluxA*/*fluxPfluxPM*/fluxFrequency;
+    float likelyHoodOfBackground = bgPC*bgA*bgP*/*bgPbgPM*/bgFrequency;
+    float likelyHoodOfFlux = fluxPC*fluxA*fluxP*/*fluxPfluxPM*/fluxFrequency;
+
 
     float sum = likelyHoodOfBackground+likelyHoodOfFlux;
 
@@ -135,52 +152,42 @@ void BayesianClassifierForBlobs::showDistributionsValues(){
 
     cout << "\n *** Analysis of PIXEL MEAN Background Blobs Distribution Complete:" << endl;
     cout << "Mean: " << bgPixelMeanDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgPixelMeanDistribution.stddev() <<endl;
+    cout << "Variance: " << bgPixelMeanDistribution.stddev() <<endl;
 
 
 	cout << "\n *** Analysis of PIXEL MEAN Flux Blobs Distribution Complete:" << endl;
     cout << "Mean: " << fluxPixelMeanDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPixelMeanDistribution.stddev() << endl;
+    cout << "Variance: " << fluxPixelMeanDistribution.stddev() << endl;
 
 
     cout << "\n *** Analysis of AREA Background Blobs Distribution Complete:" << endl;
     cout << "Mean: " << bgAreaDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgAreaDistribution.stddev() << endl;
+    cout << "Variance: " << bgAreaDistribution.stddev() << endl;
 
 
 	cout << "\n *** Analysis of AREA Flux Blobs Distribution Complete:" << endl;
     cout << "Mean: " << fluxAreaDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxAreaDistribution.stddev() << endl;
+    cout << "Variance: " << fluxAreaDistribution.stddev() << endl;
 
 
 	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
     cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
+    cout << "Variance: " << bgPhotonsInBlobDistribution.stddev() << endl;
 
 
 	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
     cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
-
-
-	cout << "\n *** Analysis of PHOTONS Background Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << bgPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << bgPhotonsInBlobDistribution.stddev() << endl;
-
-
-	cout << "\n *** Analysis of PHOTONS Flux Blobs Distribution Complete:" << endl;
-    cout << "Mean: " << fluxPhotonsInBlobDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPhotonsInBlobDistribution.stddev() << endl;
+    cout << "Variance: " << fluxPhotonsInBlobDistribution.stddev() << endl;
 
 
     cout << "\n *** Analysis of PHOTONS CLOSENESS Background Blobs Distribution Complete:" << endl;
     cout << "Mean: " << bgPhotonsClosenessDistribution .mean() <<endl;
-    cout << "Standard Deviation: " << bgPhotonsClosenessDistribution.stddev() << endl;
+    cout << "Variance: " << bgPhotonsClosenessDistribution.stddev() << endl;
 
 
 	cout << "\n *** Analysis of PHOTONS CLOSENESS Flux Blobs Distribution Complete:" << endl;
     cout << "Mean: " << fluxPhotonsClosenessDistribution.mean() <<endl;
-    cout << "Standard Deviation: " << fluxPhotonsClosenessDistribution.stddev() << endl;
+    cout << "Variance: " << fluxPhotonsClosenessDistribution.stddev() << endl;
 
     getchar();
 }

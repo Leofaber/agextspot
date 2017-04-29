@@ -24,7 +24,7 @@ class ErrorEstimator
 
 
         /**
-            Print on console the results in terms of error mean and false negatives.
+            Print on console the results.
         */
         void showResults();
 
@@ -92,6 +92,10 @@ class ErrorEstimator
         float getDistanceErrorStdDev();
 
 
+        float getChoenKappa();
+
+
+        int getTotalInstances();
 
         vector<float> errorListElement;
 

@@ -11,6 +11,7 @@ using namespace std;
 class Thresholder
 {
 public:
+    static Mat computeImageHistogram(Mat inputImage);
 	static Mat makeThresholding(Mat inputImage, double t);
 	static int getThresholdFromPeaksMethod(Mat histogram);
 	static int getThresholdFromPercentileMethod(Mat image, float percentile);

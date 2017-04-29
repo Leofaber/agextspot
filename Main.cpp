@@ -17,11 +17,14 @@ int main(){
 
 
 
-	string testSetPath = "Dataset/TestSet";
 
-    string trainSetFlux = "Dataset/TrainSet/flux";
+    // HardTestSetF40Bg0
+    // TestSet
+	string testSetPath = "Dataset1000/TestSet";
 
-    string trainSetBg = "Dataset/TrainSet/bg";
+    string trainSetFlux = "Dataset1000/TrainingSet/flux";
+
+    string trainSetBg = "Dataset1000/TrainingSet/bg";
 
 
 
@@ -32,7 +35,8 @@ int main(){
 
     bool debugMode = false;
     /// Classificatore Bayesiano per la classificazione dei blobs in flusso/background
-    BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
+     //BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
+     BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(debugMode);
 
 
 

@@ -6,15 +6,7 @@ Thresholder::Thresholder()
 {
 }
 
-
-Mat Thresholder::makeThresholding(Mat inputImage, double t) {
-	Mat destinationImage;
-	double maxValue = 255;
-	threshold(inputImage, destinationImage, t, maxValue, THRESH_TOZERO);
-	return destinationImage;
-}
-
-int Thresholder::getThresholdFromPercentileMethod(Mat image, float percentile){
+Mat Thresholder::computeImageHistogram(Mat inputImage) {
     int histSize = 256;
 	float range[] = { 0, 255 };
 	const float* histRange = { range };
@@ -22,17 +14,45 @@ int Thresholder::getThresholdFromPercentileMethod(Mat image, float percentile){
 	bool uniform = true; bool accumulate = false;
 
 	Mat histogram;
-	calcHist(&image, 1, 0, Mat(), histogram, 1, &histSize, &histRange, uniform, accumulate);
+	calcHist(&inputImage, 1, 0, Mat(), histogram, 1, &histSize, &histRange, uniform, accumulate);
 
+    return histogram;
 
+}
+
+Mat Thresholder::makeThresholding(Mat inputImage, double t) {
+	Mat destinationImage;
+	double maxValue = 255;
+	threshold(inputImage, destinationImage, t, maxValue, THRESH_TOZERO);
+
+    /// DEBUG
+   // int histSize = 256;
+	//Mat histogram = computeImageHistogram(destinationImage);
+//	for (int i=0; i<histSize; i++)
+  //      cout << "i="<<i <<" " << histogram.at<float>(i, 0) << endl;
+
+	return destinationImage;
+}
+
+int Thresholder::getThresholdFromPercentileMethod(Mat image, float percentile){
+
+    Mat histogram = computeImageHistogram(image);
+
+    int histSize = 256;
     float numberOfPixels = image.rows*image.cols;
     float percentilePixels = percentile*numberOfPixels/100;
-   // cout << "percentilePixels: " << percentilePixels << endl;
+
+   // cout << "\n\n percentilePixels: " << percentilePixels << endl;
+   // for (int i=0; i<histSize; i++)
+    //    cout << "i="<<i <<" " << histogram.at<float>(i, 0) << endl;
+
     float count = 0;
     int threshold = 0;
     while (count < percentilePixels){
         count += histogram.at<float>(threshold);
+     //   cout << "count " << count << " percentile pixels " << percentilePixels << endl;
         threshold++;
+   //     cout << "t: " << threshold << endl;
     }
     return threshold;
 }

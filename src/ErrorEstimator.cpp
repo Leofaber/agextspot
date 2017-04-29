@@ -124,11 +124,31 @@ float ErrorEstimator :: getDistanceErrorStdDev(){
     return fpCount/(fpCount+tnCount);
  }
 
+ int ErrorEstimator::getTotalInstances(){
+    return tpCount+tnCount+fnCount+fpCount;
+ }
+
+ float ErrorEstimator::getChoenKappa(){
+    float p0 = (tpCount+tnCount)/getTotalInstances();
+    float pe = 0.5;
+    return (p0-pe)/(1-pe);
+ }
+
  void ErrorEstimator::showResults(){
 
     cout << "\n*********************************************" << endl;
     cout << "Results of Analysis: "<<endl;
-    cout << "Number of istances: " << "class Flux: " << fClass << " class Background: " << bClass << " total: " << fClass+bClass << endl;
+
+    cout << "Correctly Classified Instances: " << tpCount+tnCount << "  "<< ((tpCount+tnCount)/getTotalInstances())*100<<"%"<<endl;
+
+    cout << "Incorrectly Classified Instances: " << fpCount+fnCount << "  "<< ((fpCount+fnCount)/getTotalInstances())*100<<"%"<<endl;
+
+    cout << "Kappa statistic: " << getChoenKappa() << endl;
+
+    cout << "Total Number of Instances: " << "class Flux: " << fClass << " class Background: " << bClass << " total: " << fClass+bClass << endl;
+
+
+
     cout << "Distances Error Mean and Variance: " << getDistanceErrorMean() << " +- " << getDistanceErrorStdDev()<<endl;
     cout << "FN: "<<fnCount<<" FP: "<<fpCount<<" TP: "<<tpCount<<" TF:"<<tnCount<<endl;
     cout << "False Negatives Rate: " << computeFalseNegativeRate()*100<<"%  (miss rate)"<<endl;

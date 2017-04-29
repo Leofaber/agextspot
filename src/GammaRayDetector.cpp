@@ -58,7 +58,7 @@ Blob* GammaRayDetector::detect(string fitsFileName)
 
     if(fluxBlob != nullptr && debugMode){
         Mat tempImageRgb(tempImage.rows, tempImage.cols, CV_8UC3, Scalar(0,0,0)); //3-channel
-        ImagePrinter::printImageBlob(tempImageRgb, fluxBlob,"Flux blob");
+        ImagePrinter::printImageBlob(tempImageRgb, fluxBlob,"Last GRB found");
         waitKey(0);
     }
     return fluxBlob;
