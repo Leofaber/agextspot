@@ -14,7 +14,7 @@
 class ErrorEstimator
 {
     public:
-        ErrorEstimator(int rows, int cols, string imagesTypes, int numberOfImages);
+        ErrorEstimator(int rows, int cols);
 
         /**
             Add to the errorListElement a new distance error.
@@ -99,8 +99,6 @@ class ErrorEstimator
 
         vector<float> errorListElement;
 
-        string imagesTypes;
-        int numberOfImages;
         Point center;
         float tpCount;
         float fpCount;

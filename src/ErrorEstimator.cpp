@@ -1,12 +1,9 @@
 #include "ErrorEstimator.h"
 
-ErrorEstimator::ErrorEstimator(int row, int cols, string _imagesTypes, int _numberOfImages)
+ErrorEstimator::ErrorEstimator(int row, int cols)
 {
     center.x=row/2;
     center.y=cols/2;
-    imagesTypes = _imagesTypes;
-    numberOfImages = _numberOfImages;
-//    fluxCount = 0;
 
 }
 
@@ -23,25 +20,24 @@ float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
  void ErrorEstimator :: updateErrorList(Blob* b, string fileName) {
     char classChar = fileName.at(0);
     //cout << "Il primo carattere " << classChar << endl;
-     if(b==nullptr && classChar=='F'){
-        fClass++;
-        addFalseNegativeCount();
-     }
-     else if (b!=nullptr && classChar=='F'){
-        fClass++;
-        addTruePositiveCount();
-        float error = getDistanceFromCenter(b);
-        errorListElement.push_back(error);
+    if(b==nullptr && classChar=='F'){
+       fClass++;
+       addFalseNegativeCount();
+    }
+    else if (b!=nullptr && classChar=='F'){
+       fClass++;
+       addTruePositiveCount();
+       float error = getDistanceFromCenter(b);
+       errorListElement.push_back(error);
     }
     else if(b==nullptr && classChar=='B') {
         bClass++;
         addTrueNegativeCount();
     }
-    else {
+    else if(b!=nullptr && classChar=='B'){
         bClass++;
-        addFalseNegativeCount();
+        addFalsePositiveCount();
     }
-        //addFluxCount();
 
 }
 
@@ -64,15 +60,24 @@ void ErrorEstimator::addFalseNegativeCount(){
 }
 
 float ErrorEstimator :: computePrecision() {
-    return tpCount/(tpCount+fpCount);
+    if(tpCount == 0 && fpCount == 0)
+        return 0;
+    else
+        return tpCount/(tpCount+fpCount);
 }
 
 float ErrorEstimator :: computeRecall() {
-    return tpCount/(tpCount+fnCount);
+    if(tpCount == 0 && fnCount == 0)
+        return 0;
+    else
+        return tpCount/(tpCount+fnCount);
 }
 
 float ErrorEstimator :: computeSpecificity() {
-    return tnCount/(tnCount+fpCount);
+    if(tnCount == 0 && fpCount == 0)
+        return 0;
+    else
+        return tnCount/(tnCount+fpCount);
 }
 
 float ErrorEstimator :: computeFMeasure() {
@@ -117,12 +122,18 @@ float ErrorEstimator :: getDistanceErrorStdDev(){
  }
 
  float ErrorEstimator::computeFalseNegativeRate(){
-    return fnCount/(tpCount+fnCount);
+    if(fnCount==0 && tpCount==0)
+        return 0;
+    else
+        return fnCount/(tpCount+fnCount);
  }
 
- float ErrorEstimator::computeFalsePositiveRate(){
-    return fpCount/(fpCount+tnCount);
- }
+float ErrorEstimator::computeFalsePositiveRate(){
+    if(fpCount==0 && tnCount==0)
+        return 0;
+    else
+        return fpCount/(fpCount+tnCount);
+}
 
  int ErrorEstimator::getTotalInstances(){
     return tpCount+tnCount+fnCount+fpCount;
@@ -150,7 +161,7 @@ float ErrorEstimator :: getDistanceErrorStdDev(){
 
 
     cout << "Distances Error Mean and Variance: " << getDistanceErrorMean() << " +- " << getDistanceErrorStdDev()<<endl;
-    cout << "FN: "<<fnCount<<" FP: "<<fpCount<<" TP: "<<tpCount<<" TF:"<<tnCount<<endl;
+    cout << "FN: "<<fnCount<<" FP: "<<fpCount<<" TP: "<<tpCount<<" TN:"<<tnCount<<endl;
     cout << "False Negatives Rate: " << computeFalseNegativeRate()*100<<"%  (miss rate)"<<endl;
     cout << "False Positives Rate: " << computeFalsePositiveRate()*100<<"%  (false alarm rate)"<<endl;
     cout << "Accuracy: " << computeAccuracy()*100<<"%" << endl;

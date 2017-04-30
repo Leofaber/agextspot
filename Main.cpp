@@ -20,7 +20,7 @@ int main(){
 
     // HardTestSetF40Bg0
     // TestSet
-	string testSetPath = "Dataset1000/TestSet";
+	string testSetPath = "Dataset1000/HardTestSetF40Bg0";
 
     string trainSetFlux = "Dataset1000/TrainingSet/flux";
 
@@ -29,14 +29,14 @@ int main(){
 
 
     /// Classe per il calcolo della permormance
-    ErrorEstimator* ee = new ErrorEstimator(100,100,"flux",50);
+    ErrorEstimator* ee = new ErrorEstimator(100,100);
 
 
 
     bool debugMode = false;
     /// Classificatore Bayesiano per la classificazione dei blobs in flusso/background
-     //BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
-     BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(debugMode);
+    //BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
+    BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(debugMode);
 
 
 
