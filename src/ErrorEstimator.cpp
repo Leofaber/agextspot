@@ -10,7 +10,7 @@ ErrorEstimator::ErrorEstimator(int row, int cols)
 
 float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
     float distance =  0;
-    Point c = b->getCentroid();
+    Point c = b->getFloatingCentroid();
     float arg =  pow(c.x - center.x,2) +pow (c.y - center.y,2) ;
     distance = pow(arg , 0.5);
     cout << "Errore stimato: " << distance << endl;
@@ -165,7 +165,6 @@ float ErrorEstimator::computeFalsePositiveRate(){
     cout << "False Negatives Rate: " << computeFalseNegativeRate()*100<<"%  (miss rate)"<<endl;
     cout << "False Positives Rate: " << computeFalsePositiveRate()*100<<"%  (false alarm rate)"<<endl;
     cout << "Accuracy: " << computeAccuracy()*100<<"%" << endl;
-    //cout << "Simple Accuracy: " << computeSimpleAccuracy()*100<<"%" << endl;
     cout << "FMeasure: " << computeFMeasure()*100<<"%" <<endl;
     cout << "************************************************" << endl;
 

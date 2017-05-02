@@ -8,14 +8,17 @@ class BayesianClassifierForBlobs
     public:
 
         /**
-            Calls learnFromTrainingSet to learn the distributions and shows them.
-        */
-        BayesianClassifierForBlobs(string simulatedBackgroundFitsFilesPath,string simulatedFluxFitsFilesPath, bool debugMode);
-
-        /**
             Uses already computed distribution values, hardcoded into this constructor.
         */
         BayesianClassifierForBlobs(bool debugMode);
+
+
+        /**
+            Use the BlobsDistributionEvaluator class to compute the frequencies of the classes background/flux,
+            and the distributions of the attributes.
+        */
+        void learnFromTrainingSet(string _trainingSetPath);
+
 
 
         /**
@@ -34,11 +37,7 @@ class BayesianClassifierForBlobs
         string simulatedFluxFitsFilesPath;
         bool debugMode;
 
-        /**
-            Use the BlobsDistributionEvaluator class to compute the frequencies of the classes background/flux,
-            and the distributions of the attributes.
-        */
-        void learnFromTrainingSet();
+
 
 
         /**

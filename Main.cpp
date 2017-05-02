@@ -16,33 +16,25 @@ int main(){
     getchar();
 
 
-
-
-    // HardTestSetF40Bg0
-    // TestSet
-	string testSetPath = "Dataset1000/HardTestSetF40Bg0";
-
-    string trainSetFlux = "Dataset1000/TrainingSet/flux";
-
-    string trainSetBg = "Dataset1000/TrainingSet/bg";
+    /// Il path al training set composto da 1000 immagini formato FITS (500 grb f=40,80,120,160,200 bg=0 , 500 background con f=0 bg=15)
+    /// Il training set è all'interno della root del progetto
+    string trainingSet = "Dataset1000/TrainingSet";
 
 
 
-    /// Classe per il calcolo della permormance
-    ErrorEstimator* ee = new ErrorEstimator(100,100);
+    /// Il path al test set. I test set disponibili sono i seguenti:
+    /// TestSet Standard: 500 immagini formato FITS (250 grb f=40,80,120,160,200 bg=15 , 250 background con f=0 bg=15)
+    /// MediumTestSet: 500 immagini formato FITS (250 grb f=80 bg=15 , 250 background con f=0 bg=15)
+    /// HardTestSet: 500 immagini formato FITS (250 grb f=40 bg=15 , 250 background con f=0 bg=15)
+    string workPath = "Dataset1000/MediumTestSet";
 
 
+    /// GammaRayDetector(bool validationMode , string workPath, bool showImagesMode)
+    GammaRayDetector grd(true,workPath,false);
 
-    bool debugMode = false;
-    /// Classificatore Bayesiano per la classificazione dei blobs in flusso/background
-    //BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(trainSetBg,trainSetFlux,debugMode);
-    BayesianClassifierForBlobs* reverendoBayes = new BayesianClassifierForBlobs(debugMode);
-
+    //grd.trainBayesianClassifier(trainingSet);
 
 
-	debugMode = false;
-	/// Classe per la rilevazione delle sorgenti di raggi gamma
-    GammaRayDetector grd(testSetPath,reverendoBayes,ee,debugMode);
     grd.startAnalysis();
 
 

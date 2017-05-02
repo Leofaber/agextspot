@@ -1,24 +1,6 @@
 #include "BayesianClassifierForBlobs.h"
 
-BayesianClassifierForBlobs::BayesianClassifierForBlobs(string _simulatedBackgroundFitsFilesPath,string _simulatedFluxFitsFilesPath, bool _debugMode)
-{
 
-    simulatedBackgroundFitsFilesPath = _simulatedBackgroundFitsFilesPath;
-
-    simulatedFluxFitsFilesPath = _simulatedFluxFitsFilesPath;
-
-    debugMode = _debugMode;
-
-    learnFromTrainingSet();
-
-    /**
-        Prints everythings
-    */
-    showDistributionsValues();
-
-
-
-}
 
 BayesianClassifierForBlobs::BayesianClassifierForBlobs(bool _debugMode){
     debugMode = _debugMode;
@@ -31,7 +13,11 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(bool _debugMode){
 
 
 
-void BayesianClassifierForBlobs::learnFromTrainingSet(){
+void BayesianClassifierForBlobs::learnFromTrainingSet(string _trainingSetPath){
+
+    simulatedBackgroundFitsFilesPath = _trainingSetPath+"/bg";
+
+    simulatedFluxFitsFilesPath = _trainingSetPath+"/flux";
 
 
     cout << "\n** Learning from training set **\n" << endl;
@@ -70,6 +56,11 @@ void BayesianClassifierForBlobs::learnFromTrainingSet(){
 
     fluxPhotonsClosenessDistribution= BlobsDistributionEvaluator::getMeanAndDeviation(simulatedFluxFitsFilesPath, PHOTONSCLOSENESS, debugMode);
 
+
+     /**
+        Prints everythings
+    */
+    showDistributionsValues();
 }
 
 vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
@@ -111,8 +102,8 @@ vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
     prediction.push_back(make_pair("Flux",probabilityOfFlux));
 
 
-    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is background " << " with probability: " << probabilityOfBg*100<<"%"<<endl;
-    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is flux " << " with probability: " << probabilityOfFlux*100<<"%"<<endl;
+    cout << "[Reverend Bayes] "<< "Point "<<b->getFloatingCentroid()<<" is background " << " with probability: " << probabilityOfBg*100<<"%"<<endl;
+    cout << "[Reverend Bayes] "<< "Point "<<b->getFloatingCentroid()<<" is flux " << " with probability: " << probabilityOfFlux*100<<"%"<<endl;
 
 
     return prediction;

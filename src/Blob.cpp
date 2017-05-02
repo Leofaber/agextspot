@@ -6,6 +6,8 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
 
     centroid = computeCentroid();
 
+    floatingCentroid = computeFloatingCentroid();
+
     blobPixels = computePixelsOfBlob(c,image);
 
     numberOfPixels = blobPixels.size();
@@ -19,7 +21,7 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
 
     if(debugMode){
         cout << "Creating a new Blob. Number of contours pixels: " << c.size() << endl;
-        cout << "Centroid of Blob: " << centroid << endl;
+        cout << "Centroid of Blob: " << centroid << "  "<< floatingCentroid <<endl;
         cout << "Pixels of Blob: " << numberOfPixels << endl;
         cout << "Pixels mean: " << pixelMean << endl;
         cout << "Photons in Blob: " << photonsInBlob << endl;
@@ -34,6 +36,9 @@ vector<Point> Blob::getContour(){
 }
 Point Blob::getCentroid(){
     return centroid;
+}
+Point Blob::getFloatingCentroid(){
+    return floatingCentroid;
 }
 int Blob:: getNumberOfPixels() {
     return numberOfPixels;
@@ -50,15 +55,27 @@ float Blob::getPhotonsCloseness(){
 
 
 Point Blob::computeCentroid(){
-    int sumX =0;
+    int sumX=0;
     int sumY=0;
     for(vector<Point>::iterator l = contour.begin(); l < contour.end(); l++){
-                Point p = *l;
-                //cout << p << endl;
-                sumX+=p.x;
-                sumY+=p.y;
+        Point p = *l;
+        sumX+=p.x;
+        sumY+=p.y;
     }
     Point c(sumX/contour.size(),sumY/contour.size());
+    return c;
+}
+
+Point Blob::computeFloatingCentroid(){
+    float sumX=0;
+    float sumY=0;
+    for(vector<Point>::iterator l = contour.begin(); l < contour.end(); l++){
+        Point p = *l;
+        sumX+=p.x;
+        sumY+=p.y;
+    }
+    float total = contour.size();
+    Point c(sumX/total,sumY/total);
     return c;
 }
 
