@@ -8,7 +8,7 @@ BayesianClassifierForBlobs::BayesianClassifierForBlobs(bool _debugMode){
     /**
         Prints everythings
     */
-    showDistributionsValues();
+   // showDistributionsValues();
 }
 
 

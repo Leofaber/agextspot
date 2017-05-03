@@ -49,6 +49,7 @@ Blob* GammaRayDetector::detect(string fitsFileName)
 {
     string fitsFilePath = workPath + "/" +fitsFileName;
 
+    FileWriter::write2FileHeader(fitsFilePath);
 
     /// 1 - CONVERTING FITS TO MAT
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(fitsFilePath);
@@ -90,6 +91,9 @@ Blob* GammaRayDetector::detect(string fitsFileName)
             float bgProbability = predicted[0].second;
             float fluxProbability = predicted[1].second;
 
+            string information2Print = "Blob in: [" + to_string(b->getCentroid().x) +"," +to_string(b->getCentroid().y)   +"] background con probabilità: " + to_string(bgProbability*100) +"%" + " flusso con probabilità: " + to_string(fluxProbability*100) +"%";
+            FileWriter::write2FileBody(information2Print);
+
             if(fluxProbability >= bgProbability && fluxProbability>max){
                 max = fluxProbability;
                 mostProbableBlob = b;
@@ -107,6 +111,7 @@ Blob* GammaRayDetector::detect(string fitsFileName)
 
     }else{
         cout << "No flux has been found." << endl;
+        FileWriter::write2FileBody("No flux has been found!");
         return nullptr;
     }
  }

@@ -8,6 +8,7 @@
 #include "BlobsFinder.h"
 #include "ErrorEstimator.h"
 #include "BayesianClassifierForBlobs.h"
+#include "FileWriter.h"
 #include <math.h>
 #define _USE_MATH_DEFINES
 
