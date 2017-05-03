@@ -4,6 +4,12 @@ ErrorEstimator::ErrorEstimator(int row, int cols)
 {
     center.x=row/2;
     center.y=cols/2;
+    tpCount=0;
+    fpCount=0;
+    tnCount=0;
+    fnCount=0;
+    fClass=0;
+    bClass=0;
 
 }
 
