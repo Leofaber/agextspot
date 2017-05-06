@@ -18,18 +18,11 @@ void GammaRayDetector::trainBayesianClassifier(string trainingSetPath){
 
 
 
-void GammaRayDetector::startAnalysis(){
 
+void GammaRayDetector::detect()
+{
     FileWriter::write2FileHeader(imagePath, outputLogName);
     cout<<"\n\nAnalysis of: " << imagePath << endl;
-    Blob* b = detect(imagePath);
-
-
-}
-
-Blob* GammaRayDetector::detect(string imagePath)
-{
-
 
     /// 1 - CONVERTING FITS TO MAT
 	Mat tempImage = FitsToCvMatConverter::convertFitsToCvMat(imagePath);
@@ -42,7 +35,7 @@ Blob* GammaRayDetector::detect(string imagePath)
     /// 3 - SELECT MOST PROBABLE BLOB TO BE A FLUX
     Blob* fluxBlob = getMostProbableFluxBlob(blobs);
 
-    return fluxBlob;
+
 }
 
 

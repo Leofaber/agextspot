@@ -102,8 +102,8 @@ vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
     prediction.push_back(make_pair("Flux",probabilityOfFlux));
 
 
-    cout << "[Reverend Bayes] "<< "Point "<<b->getFloatingCentroid()<<" is background " << " with probability: " << probabilityOfBg*100<<"%"<<endl;
-    cout << "[Reverend Bayes] "<< "Point "<<b->getFloatingCentroid()<<" is flux " << " with probability: " << probabilityOfFlux*100<<"%"<<endl;
+    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is background " << " with probability: " << probabilityOfBg*100<<"%"<<endl;
+    cout << "[Reverend Bayes] "<< "Point "<<b->getCentroid()<<" is flux " << " with probability: " << probabilityOfFlux*100<<"%"<<endl;
 
 
     return prediction;

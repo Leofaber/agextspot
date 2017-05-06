@@ -6,7 +6,9 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
 
     centroid = computeCentroid();
 
-    floatingCentroid = computeFloatingCentroid();
+    centroidX = computeFloatingX();
+
+    centroidY = computeFloatingY();
 
     blobPixels = computePixelsOfBlob(c,image);
 
@@ -19,9 +21,10 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
     photonsCloseness = computePhotonsCloseness(photonImage);
 
 
+
     if(debugMode){
         cout << "Creating a new Blob. Number of contours pixels: " << c.size() << endl;
-        cout << "Centroid of Blob: " << centroid << "  "<< floatingCentroid <<endl;
+        cout << "Centroid of Blob: " << centroid << "  "<< centroidX << " " << centroidY << endl;
         cout << "Pixels of Blob: " << numberOfPixels << endl;
         cout << "Pixels mean: " << pixelMean << endl;
         cout << "Photons in Blob: " << photonsInBlob << endl;
@@ -37,8 +40,11 @@ vector<Point> Blob::getContour(){
 Point Blob::getCentroid(){
     return centroid;
 }
-Point Blob::getFloatingCentroid(){
-    return floatingCentroid;
+float Blob::getFloatingCentroidX(){
+    return centroidX;
+}
+float Blob::getFloatingCentroidY(){
+    return centroidY;
 }
 int Blob:: getNumberOfPixels() {
     return numberOfPixels;
@@ -54,6 +60,7 @@ float Blob::getPhotonsCloseness(){
 }
 
 
+
 Point Blob::computeCentroid(){
     int sumX=0;
     int sumY=0;
@@ -66,17 +73,26 @@ Point Blob::computeCentroid(){
     return c;
 }
 
-Point Blob::computeFloatingCentroid(){
+float Blob::computeFloatingX() {
     float sumX=0;
-    float sumY=0;
     for(vector<Point>::iterator l = contour.begin(); l < contour.end(); l++){
         Point p = *l;
         sumX+=p.x;
+    }
+    float total = contour.size();
+    return sumX/total;
+}
+
+
+
+float Blob::computeFloatingY() {
+    float sumY=0;
+    for(vector<Point>::iterator l = contour.begin(); l < contour.end(); l++){
+        Point p = *l;
         sumY+=p.y;
     }
     float total = contour.size();
-    Point c(sumX/total,sumY/total);
-    return c;
+    return sumY/total;
 }
 
 vector<Pixel> Blob::computePixelsOfBlob(vector<Point>& c, Mat image){

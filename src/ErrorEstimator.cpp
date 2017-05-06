@@ -16,7 +16,7 @@ ErrorEstimator::ErrorEstimator(int row, int cols)
 
 float ErrorEstimator ::getDistanceFromCenter(Blob* b) {
     float distance =  0;
-    Point c = b->getFloatingCentroid();
+    Point c = b->getCentroid();
     float arg =  pow(c.x - center.x,2) +pow (c.y - center.y,2) ;
     distance = pow(arg , 0.5);
     cout << "Errore stimato: " << distance << endl;

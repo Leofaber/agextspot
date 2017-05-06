@@ -14,6 +14,7 @@
 
 using namespace std;
 
+
 class GammaRayDetector
 {
 public:
@@ -23,12 +24,11 @@ public:
     */
 	GammaRayDetector(string imagePath, string outputLogName);
 
-
-
- 	/**
-
+	/**
+        Open the fits file, convert it to Mat image, finds blobs, classify them with bayesian classifier, compute the
+        centroid of the blob in galactic coordinate. Return the blob if found, eturn null_ptr instead.
     */
- 	void startAnalysis();
+ 	void detect();
 
     /**
         Computes the distributions for the classifier from a training set
@@ -39,11 +39,7 @@ public:
 
 private:
 
-    /**
-        Open the fits file, convert it to Mat image, finds blobs, classify them with bayesian classifier, compute the
-        centroid of the blob in galactic coordinate. Return the blob if found, eturn null_ptr instead.
-    */
- 	Blob* detect(string fitsFileName);
+
 
     /**
         Given a blob list, for each blob, call Reverend Bayes to predict the probabilities.

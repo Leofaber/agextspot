@@ -7,6 +7,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+//#include "AgileMap"
 
 using namespace std;
 using namespace cv;
@@ -34,7 +35,8 @@ class Blob
             Return the centroid of the blob
         */
         Point getCentroid();
-        Point getFloatingCentroid();
+        float getFloatingCentroidX();
+        float getFloatingCentroidY();
         /**
             Return the sum of all the grey levels of the pixels of the blob divided by the number of those pixels.
         */
@@ -82,9 +84,10 @@ class Blob
         Point centroid;
         Point computeCentroid();
 
-        Point floatingCentroid;
-        Point computeFloatingCentroid();
-
+        float centroidX;
+        float centroidY;
+        float computeFloatingX();
+        float computeFloatingY();
 
         float pixelMean;
         float computePixelMean();

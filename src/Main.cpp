@@ -26,7 +26,7 @@ int main(int argc, char*argv[]){
 
         GammaRayDetector grd(imagePath,outputLogName);
         //grd.trainBayesianClassifier(trainingSet);
-        grd.startAnalysis();
+        grd.detect();
 
 
     }
