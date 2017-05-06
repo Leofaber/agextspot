@@ -19,14 +19,14 @@ class GammaRayDetector
 public:
 
     /**
-        To use when training and validating the Gamma Ray Detector (will create an Error Detector)
+
     */
-	GammaRayDetector(bool validationMode,string workPath,bool showImagesMode);
+	GammaRayDetector(string imagePath, string outputLogName);
 
 
 
  	/**
-        For each file in fitsFilesPath, call detect().
+
     */
  	void startAnalysis();
 
@@ -51,9 +51,7 @@ private:
     */
     Blob* getMostProbableFluxBlob(vector<Blob*> blobs);
 
-	string workPath;
- 	bool showImagesMode;
- 	bool validationMode;
-	ErrorEstimator* errorEstimator;
-	BayesianClassifierForBlobs* reverendBayes;
+	string imagePath;
+	string outputLogName;
+ 	BayesianClassifierForBlobs* reverendBayes;
  };

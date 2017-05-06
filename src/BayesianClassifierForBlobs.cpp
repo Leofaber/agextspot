@@ -67,23 +67,23 @@ vector<pair<string,float> > BayesianClassifierForBlobs::classify(Blob* b){
 
     vector<pair<string,float> > prediction;
 
-    float pixelMean = b->getPixelsMean();
+    //float pixelMean = b->getPixelsMean();
     float area = b->getNumberOfPixels();
     float photons = b->getPhotonsInBlob();
-    float photonsCloseness = b->getPhotonsCloseness();
+    //float photonsCloseness = b->getPhotonsCloseness();
     /// ADD ATTRIBUTE
 
-    float bgPM = computeProbabilityFromDistribution(pixelMean,bgPixelMeanDistribution);
+    //float bgPM = computeProbabilityFromDistribution(pixelMean,bgPixelMeanDistribution);
     float bgA = computeProbabilityFromDistribution(area, bgAreaDistribution);
     float bgP = computeProbabilityFromDistribution(photons, bgPhotonsInBlobDistribution);
-    float bgPC = computeProbabilityFromDistribution(photonsCloseness, bgPhotonsClosenessDistribution);
+    //float bgPC = computeProbabilityFromDistribution(photonsCloseness, bgPhotonsClosenessDistribution);
     /// ADD DISTR VALUE
 
 
-    float fluxPM = computeProbabilityFromDistribution(pixelMean,fluxPixelMeanDistribution);
+    //float fluxPM = computeProbabilityFromDistribution(pixelMean,fluxPixelMeanDistribution);
     float fluxA = computeProbabilityFromDistribution(area, fluxAreaDistribution);
     float fluxP = computeProbabilityFromDistribution(photons, fluxPhotonsInBlobDistribution);
-    float fluxPC = computeProbabilityFromDistribution(photonsCloseness, fluxPhotonsClosenessDistribution);
+    //float fluxPC = computeProbabilityFromDistribution(photonsCloseness, fluxPhotonsClosenessDistribution);
     /// ADD DISTR VALUE
 
 

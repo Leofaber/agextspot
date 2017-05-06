@@ -7,7 +7,7 @@ FileWriter::FileWriter()
 
 
 
-void FileWriter::write2FileHeader(string input) {
+void FileWriter::write2FileHeader(string input, string outputFile) {
     ofstream resultOfAnalysis;
 
 
@@ -21,18 +21,21 @@ void FileWriter::write2FileHeader(string input) {
     strftime(date,sizeof(date),"%d-%m-%Y %I:%M:%S",timeinfo);
     std::string str(date);
 
-    resultOfAnalysis.open ("resultOfAnalysis.txt", std::fstream::app);
-    resultOfAnalysis << "\n===================================================================================================\n";
+    resultOfAnalysis.open (outputFile, std::fstream::app);
+    resultOfAnalysis << "***************************************************************************************************\n";
+    resultOfAnalysis << "                                  RESULT OF GBR DETECTION\n";
+    resultOfAnalysis << "***************************************************************************************************\n\n";
+    resultOfAnalysis << "===================================================================================================\n";
     resultOfAnalysis << date ;
     resultOfAnalysis << "\nAnalisi di: " << input;
     resultOfAnalysis.close();
 }
 
 
-void FileWriter::write2FileBody(string input) {
+void FileWriter::write2FileBody(string input, string outputFile) {
     ofstream resultOfAnalysis;
 
-    resultOfAnalysis.open ("resultOfAnalysis.txt", std::fstream::app);
+    resultOfAnalysis.open (outputFile, std::fstream::app);
     resultOfAnalysis << "\n" + input;
     resultOfAnalysis.close();
 }

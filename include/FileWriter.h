@@ -11,8 +11,8 @@ using namespace std;
 class FileWriter
 {
     public:
-        static void write2FileHeader(string input);
-        static void write2FileBody(string input);
+        static void write2FileHeader(string input, string outputFile);
+        static void write2FileBody(string input, string outputFile);
 
     protected:
     private:
