@@ -6,7 +6,7 @@ class GaussianDistribution
 {
     public:
         GaussianDistribution(float mean, float deviation);
-     private:
+    private:
         float mean;
         float deviation;
 };
