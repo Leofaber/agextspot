@@ -1,6 +1,6 @@
 #pragma once
 
-#include "fitsio.h"
+#include <fitsio.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <string>

@@ -9,6 +9,7 @@
 #include "ErrorEstimator.h"
 #include "BayesianClassifierForBlobs.h"
 #include "FileWriter.h"
+#include <AgileMap.h>
 #include <math.h>
 #define _USE_MATH_DEFINES
 
@@ -42,12 +43,12 @@ private:
 
 
     /**
-        Given a blob list, for each blob, call Reverend Bayes to predict the probabilities.
-        Then computes the max and returns the most probable Blob to be a flux.
+        Given a blob list, for each blob, call Reverend Bayes to predict the probabilities and write them to an output file.
     */
-    Blob* getMostProbableFluxBlob(vector<Blob*> blobs);
+    void classifyBlobs(vector<Blob*> blobs);
 
 	string imagePath;
 	string outputLogName;
  	BayesianClassifierForBlobs* reverendBayes;
+	AgileMap* agileMapUtils;
  };

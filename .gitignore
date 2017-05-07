@@ -34,6 +34,7 @@
 # Folders
 bin/*
 Dataset1000/*
+opencv-2.4.13/*
 obj/*
 OpenCvLibs/*
 GBR_4_AGILE/*
