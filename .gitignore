@@ -38,6 +38,7 @@ opencv-2.4.13/*
 obj/*
 OpenCvLibs/*
 GBR_4_AGILE/*
+version/*
 
 # Files
 *.cbp
@@ -45,4 +46,5 @@ GBR_4_AGILE/*
 *.layout
 *.png
 *.cts
-
+*.txt
+README.md
