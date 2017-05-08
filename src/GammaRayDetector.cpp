@@ -59,7 +59,7 @@ void GammaRayDetector::classifyBlobs(vector<Blob*> blobs){
             double gaLat=agileMapUtils->b(b->getCentroid().x,b->getCentroid().y);
 
 
-            string information2Print = "Blob in: [" + to_string(b->getCentroid().x) +"," +to_string(b->getCentroid().y)   +"]" +"["+to_string(gaLong) +","+to_string(gaLat)+"] background con probabilità: " + to_string(bgProbability*100) +"%" + " flusso con probabilità: " + to_string(fluxProbability*100) +"%";
+            string information2Print = "Blob in: [" + to_string(b->getCentroid().x) +"," +to_string(b->getCentroid().y)   +"]" +"["+to_string(gaLong) +","+to_string(gaLat)+"] P[Blob=bg]: " + to_string(bgProbability*100) +"%" + " P[Blob=flux]: " + to_string(fluxProbability*100) +"%";
             cout << information2Print << endl;
             FileWriter::write2FileBody(information2Print, outputLogName);
 
