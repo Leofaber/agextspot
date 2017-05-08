@@ -1,7 +1,7 @@
 Utilizzo:
 
-./<nome eseguibile> <path cartella immagine> <nome file di output>
+./<nome eseguibile> <path immagine FITS> <nome file di output>
 
-Esempio in locale:
+Esempio:
 
 ./shorttermanalysisfinal ../map.cts ../output.txt
