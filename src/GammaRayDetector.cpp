@@ -45,7 +45,7 @@ void GammaRayDetector::classifyBlobs(vector<Blob*> blobs){
 
     if(blobs.size() > 0){
 
-        
+
         for(vector<Blob*>::iterator i = blobs.begin(); i != blobs.end(); i++){
 
             Blob* b = *i;
@@ -55,22 +55,22 @@ void GammaRayDetector::classifyBlobs(vector<Blob*> blobs){
             float bgProbability = predicted[0].second;
             float fluxProbability = predicted[1].second;
 
-	    double gaLong=agileMapUtils->l(b->getCentroid().x,b->getCentroid().y);
-	    double gaLat=agileMapUtils->b(b->getCentroid().x,b->getCentroid().y);
+            double gaLong=agileMapUtils->l(b->getCentroid().x,b->getCentroid().y);
+            double gaLat=agileMapUtils->b(b->getCentroid().x,b->getCentroid().y);
 
 
             string information2Print = "Blob in: [" + to_string(b->getCentroid().x) +"," +to_string(b->getCentroid().y)   +"]" +"["+to_string(gaLong) +","+to_string(gaLat)+"] background con probabilità: " + to_string(bgProbability*100) +"%" + " flusso con probabilità: " + to_string(fluxProbability*100) +"%";
-	cout << information2Print << endl;	
+            cout << information2Print << endl;
             FileWriter::write2FileBody(information2Print, outputLogName);
 
-            
+
         } // end for loop
 
 
-        
+
     }else{
         cout << "No flux has been found." << endl;
         FileWriter::write2FileBody("No flux has been found!", outputLogName);
-        
+
     }
  }

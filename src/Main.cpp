@@ -1,5 +1,5 @@
 #include "GammaRayDetector.h"
-
+#include <time.h>
 
 ///  BitBucket address
 ///  git@bitbucket.org:GZHeisenberg/shorttermanalysisforagilefinal.git
@@ -24,19 +24,25 @@ int main(int argc, char*argv[]){
         cout << "**********************************************************************" << endl;
 
 
+
+        clock_t tStart = clock();
+
         GammaRayDetector grd(imagePath,outputLogName);
         //grd.trainBayesianClassifier(trainingSet);
         grd.detect();
 
+        printf("Time taken: %.2fs\n", (double)(clock() - tStart)/CLOCKS_PER_SEC);
+
 
     }
     else if( argc > 3 ) {
-        printf("Too many arguments supplied.\n  -the image folder path \n   -the name of output log file\n");
+        printf("Too many arguments supplied.\n  -the image path \n   -the name of output log file\n");
 
     }
     else {
-        printf("Two arguments expected.\n   -the image folder path \n   -the name of output log file.\n");
+        printf("Two arguments expected.\n   -the image path \n   -the name of output log file.\n");
     }
     return 0;
 
 }
+

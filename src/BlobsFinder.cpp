@@ -15,13 +15,13 @@ vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	tempImage = HistogramStretching::nonLinearStretch(tempImage,r);
 
 
-	/// PRINTING IMAGE
+	/* PRINTING IMAGE
 	if(debugMode){
         cout << "Stretching complete" <<endl;
         //ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindow(tempImage,"Non linear stretching");
 
-	}
+	}*/
 
 
     /// GAUSSIAN FILTERING
@@ -29,12 +29,12 @@ vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
 	tempImage = gaussianFilter.filter(tempImage);
 
 
-	/// PRINTING IMAGE
+	/* PRINTING IMAGE
 	if(debugMode){
         cout << "Gaussian Filtering complete" << endl;
         //ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindowWithStretching(tempImage, "Gaussian smoothing");
-	}
+	}*/
 
 
 
@@ -48,12 +48,12 @@ vector<Blob*> BlobsFinder::findBlobs(Mat tempImage, bool debugMode) {
  	/// DO THRESHOLDING
 	tempImage = Thresholder::makeThresholding(tempImage, threshold);
 
-	/// PRINTING IMAGE
+	/* PRINTING IMAGE
 	if(debugMode){
         cout << "Thresholding complete." << endl;
         //ImagePrinter::printImageInConsole(tempImage);
         ImagePrinter::printImageInWindowWithStretching(tempImage, "Thresholding");
-	}
+	}*/
 
 
 	/// FIND THE CONTOUR OF EACH BLOB

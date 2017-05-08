@@ -48,3 +48,6 @@ version/*
 *.cts
 *.txt
 README.md
+version
+Makefile
+

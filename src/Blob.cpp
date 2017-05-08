@@ -14,21 +14,22 @@ Blob::Blob(vector<Point>& c, Mat image, Mat photonImage, bool debugMode)
 
     numberOfPixels = blobPixels.size();
 
-    pixelMean = computePixelMean();
+    //pixelMean = computePixelMean();
+    pixelMean = 0;
 
     photonsInBlob = computePhotonsBlob(photonImage);
 
-    photonsCloseness = computePhotonsCloseness(photonImage);
-
+    //photonsCloseness = computePhotonsCloseness(photonImage);
+    photonsCloseness = 0;
 
 
     if(debugMode){
         cout << "Creating a new Blob. Number of contours pixels: " << c.size() << endl;
         cout << "Centroid of Blob: " << centroid << "  "<< centroidX << " " << centroidY << endl;
         cout << "Pixels of Blob: " << numberOfPixels << endl;
-        cout << "Pixels mean: " << pixelMean << endl;
+        //cout << "Pixels mean: " << pixelMean << endl;
         cout << "Photons in Blob: " << photonsInBlob << endl;
-        cout << "Photons Closeness: " << photonsCloseness << endl;
+        //cout << "Photons Closeness: " << photonsCloseness << endl;
     }
 }
 
@@ -52,6 +53,7 @@ int Blob:: getNumberOfPixels() {
 float Blob::getPhotonsInBlob() {
     return photonsInBlob;
 }
+
 float Blob::getPixelsMean(){
     return pixelMean;
 }
@@ -124,7 +126,7 @@ float Blob::computePhotonsBlob(Mat photonImage){
 }
 
 
-
+/*
 float Blob::computePixelMean(){
     float numberOfBlobPixels = blobPixels.size();
     float greyLevelCount = 0;
@@ -158,6 +160,7 @@ float Blob::computePhotonsCloseness(Mat photonImage){
     photonsCloseness = countDistances/countPhotons;
     return photonsCloseness;
 }
+*/
 
 float Blob::getDistanceFromCentroid(Point photon) {
     float distance =  0;
